@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 
     [field: SerializeField] public InputManager InputManager { get; private set; }
 
+    public StateMachine StateMachine { get; private set; }
+    
     private void Awake()
     {
         if (Instance != null)
@@ -16,5 +18,10 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        StateMachine.Enter();
     }
 }
