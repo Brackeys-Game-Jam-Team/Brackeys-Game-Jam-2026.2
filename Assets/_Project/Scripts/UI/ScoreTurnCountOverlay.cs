@@ -6,6 +6,7 @@ public class ScoreTurnCountOverlay : MonoBehaviour
 {
     [Header("Integer Values")]
 
+    // DANIEL: Remove these two values later once you're able to get the score and turn values from the Gameplay
     [Tooltip("These are integer values to test the overlay image size updating properly")]
     [SerializeField] private int score = 0;
     [Tooltip("These are integer values to test the overlay image size updating properly")]
@@ -25,11 +26,14 @@ public class ScoreTurnCountOverlay : MonoBehaviour
     private Vector2 overlayImageInitialSize = Vector2.zero;
     private int currentLength = 0;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // DANIEL: Gameplay reference (keeps a list of players' scores and the turn count)
+    private Gameplay gameplay => GameManager.Instance.Gameplay;
+
+
     void Start()
     {
-        scoreText.text = "Score: " + score;
-        turnCountText.text = "Turn Count: " + turnCount;
+        scoreText.text = "Score: " + score; // DANIEL: Will need score text for each player, but maybe this one can remain just for the player.
+        turnCountText.text = "Turn Count: " + gameplay.turnCount;
 
         // Set initial text overlay image size to update width properly whenever score length changes
         overlayImageInitialSize = textOverlayImage.rectTransform.sizeDelta;
@@ -38,12 +42,12 @@ public class ScoreTurnCountOverlay : MonoBehaviour
         currentLength = score.ToString().Length;
     }
 
-    // Update is called once per frame
+    // DANIEL: We can eventually replace update with a function that will be called from the Gameplay script, or from any of the State scripts, but I can deal with that part
     void Update()
     {
         // Update score and turn count texts
         scoreText.text = "Score: " + score;
-        turnCountText.text = "Turn Count: " + turnCount;
+        turnCountText.text = "Turn Count: " + gameplay.turnCount;
 
         // Check if score's length is greater than turn count's length
         if (score.ToString().Length > turnCount.ToString().Length)
@@ -86,8 +90,5 @@ public class ScoreTurnCountOverlay : MonoBehaviour
                 currentLength = score.ToString().Length;
             }
         }
-
-        // Clamp score to maximum possible value, perhaps
-        if (score > 1000000000) score = 1000000000;
     }
 }

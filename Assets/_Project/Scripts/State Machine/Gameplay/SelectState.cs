@@ -7,6 +7,8 @@ public class SelectState : State<GameManager>
     public override void Enter()
     {
         base.Enter();
+        GameManager.Instance.Gameplay.turnCount++;
+        // open score turn count overlay UI
         // enable card selection
     }
 

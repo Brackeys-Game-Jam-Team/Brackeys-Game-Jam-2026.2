@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -30,14 +29,16 @@ public class Gameplay : MonoBehaviour
     [SerializeField] private int gridColumns = 3;
     [SerializeField] private Vector2 spacing = new(2f, 3f);
 
+    public int turnCount;
     private readonly List<Card> activeCards = new();
     private readonly List<Player> players = new();
     private Dictionary<CardValue, Sprite> visuals;
     private Dictionary<Player, Card> selections;
-    //private List<Player> winners = new();
 
     private const int WINNING_SCORE = 20;
 
+    // Unused at the moment, will be used during EndState
+    public List<Player> Winners { get; private set; } = new();
     private Player HumanPlayer => players[0];
 
     private void Awake()
@@ -48,6 +49,7 @@ public class Gameplay : MonoBehaviour
             players.Add(new Player(i + 1, isHuman: i == 0));
     }
 
+    // Called during the StartState, generates cards and spawns them to the map
     public void GenerateCards()
     {
         ClearBoard();
@@ -109,6 +111,7 @@ public class Gameplay : MonoBehaviour
         return deck;
     }
 
+    // Called when the player selects a card, and randomly sets choices for all other "players"
     private void OnCardSelected(Card card)
     {
         selections = new Dictionary<Player, Card>
@@ -122,9 +125,11 @@ public class Gameplay : MonoBehaviour
             selections.Add(players[i], randomCard);
         }
 
+        // Will place a function to change to the CompareState here
         ResolveRound();
     }
 
+    // Called during CompareState, applies score, special card, updates the score
     public void ResolveRound()
     {
         if (selections == null || selections.Count == 0)
@@ -144,6 +149,7 @@ public class Gameplay : MonoBehaviour
                 ResolveValueCard(card.Value, pickers);
         }
 
+        // Update score count UI here
         foreach (var p in players)
             Debug.Log($"{p}: {p.Score}");
 
@@ -153,8 +159,7 @@ public class Gameplay : MonoBehaviour
             Destroy(card.gameObject);
         }
 
-        // CheckConditionState;
-
+        // Will place a function to change to the CheckConditionState here
         if (CheckGameCondition())
         {
             Debug.Log("Game Cycle Ended.");
@@ -232,6 +237,7 @@ public class Gameplay : MonoBehaviour
         Debug.Log($"{picker} gains {totalAmount} pts from special card.");
     }
     
+    // (UNFINISHED) Called during the CheckConditionState to determine whether the game should continue or end
     public bool CheckGameCondition()
     {
         // If there are no cards left
@@ -253,6 +259,7 @@ public class Gameplay : MonoBehaviour
         return false;
     }
 
+    // Considering modifying this for the EndState
     private void AnnounceWinners(List<Player> candidates)
     {
         int winningScore = candidates.Max(p => p.Score);
