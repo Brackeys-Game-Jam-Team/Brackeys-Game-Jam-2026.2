@@ -1,51 +1,272 @@
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class Gameplay
+public enum CardValue
 {
-    public enum CardValue
+    One,
+    Three,
+    Five,
+    Ten,
+    Special
+}
+
+public class Gameplay : MonoBehaviour
+{
+    [System.Serializable]
+    public struct CardVisualData
     {
-        Ten,
-        Five,
-        Three,
-        One,
-        Special
+        public CardValue value;
+        public Sprite sprite;
     }
 
-    public List<CardValue> Cards;
+    [SerializeField] private Transform cardContainer;
+    [SerializeField] private Card cardPrefab;
+    [SerializeField] private List<CardVisualData> cardVisuals;
 
-    public const int CARD_GRID_SIZE = 12;
+    [Header("Grid")]
+    [SerializeField] private int totalCards = 12;
+    [SerializeField] private int gridColumns = 3;
+    [SerializeField] private Vector2 spacing = new(2f, 3f);
+
+    private readonly List<Card> activeCards = new();
+    private readonly List<Player> players = new();
+    private Dictionary<CardValue, Sprite> visuals;
+    private Dictionary<Player, Card> selections;
+    //private List<Player> winners = new();
+
+    private const int WINNING_SCORE = 20;
+
+    private Player HumanPlayer => players[0];
+
+    private void Awake()
+    {
+        visuals = cardVisuals.ToDictionary(item => item.value, item => item.sprite);
+
+        for (int i = 0; i < 4; i++)
+            players.Add(new Player(i + 1, isHuman: i == 0));
+    }
 
     public void GenerateCards()
     {
-        if (CARD_GRID_SIZE < 1)
-            throw new ArgumentOutOfRangeException(nameof(CARD_GRID_SIZE));
+        ClearBoard();
+        var deck = GenerateDeck(totalCards);
 
-        // Calculate card ratios
-        int r = CARD_GRID_SIZE - 1;
-        int one = (int)Math.Round(r * 30 / 90.0);
-        int three = (int)Math.Round(r * 30 / 90.0);
-        int five = (int)Math.Round(r * 20 / 90.0);
-        int ten = r - three - one - five;
-
-        // Build the card list
-        Cards = new List<CardValue>(CARD_GRID_SIZE) { CardValue.Special };
-        Cards.AddRange(Enumerable.Repeat(CardValue.Three, three));
-        Cards.AddRange(Enumerable.Repeat(CardValue.One, one));
-        Cards.AddRange(Enumerable.Repeat(CardValue.Five, five));
-        Cards.AddRange(Enumerable.Repeat(CardValue.Ten, ten));
-
-        // Fisher-Yates shuffle method
-        for (int i = Cards.Count - 1; i > 0; i--)
+        for (int i = 0; i < deck.Count; i++)
         {
-            int randomIndex = UnityEngine.Random.Range(0, i + 1);
-            (Cards[i], Cards[randomIndex]) = (Cards[randomIndex], Cards[i]);
+            int col = i % gridColumns;
+            int row = i / gridColumns;
+            Vector3 position = new(col * spacing.x, -row * spacing.y, 0f);
+
+            CardValue value = deck[i];
+            Sprite sprite = visuals.GetValueOrDefault(value);
+
+            Card cardInstance = Instantiate(cardPrefab, position, Quaternion.identity, cardContainer);
+            cardInstance.Initialize(value, sprite, OnCardSelected);
+            activeCards.Add(cardInstance);
         }
     }
 
-    public void RemoveCard(int index)
+    private void ClearBoard()
     {
-        Cards.RemoveAt(index);
+        foreach (var card in activeCards)
+        {
+            if (card != null)
+                Destroy(card.gameObject);
+        }
+
+        activeCards.Clear();
     }
+
+    private List<CardValue> GenerateDeck(int size)
+    {
+        if (size < 1)
+        {
+            Debug.LogError("Grid size must be at least 1.");
+            return default;
+        }
+
+        int r = size - 1;
+        int one = Mathf.RoundToInt(r * 30f / 90f);
+        int three = Mathf.RoundToInt(r * 30f / 90f);
+        int five = Mathf.RoundToInt(r * 20f / 90f);
+        int ten = r - three - one - five;
+
+        var deck = new List<CardValue>(size) { CardValue.Special };
+        deck.AddRange(Enumerable.Repeat(CardValue.One, one));
+        deck.AddRange(Enumerable.Repeat(CardValue.Three, three));
+        deck.AddRange(Enumerable.Repeat(CardValue.Five, five));
+        deck.AddRange(Enumerable.Repeat(CardValue.Ten, ten));
+
+        // Fisher-Yates Shuffle
+        for (int i = deck.Count - 1; i > 0; i--)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, i + 1);
+            (deck[i], deck[randomIndex]) = (deck[randomIndex], deck[i]);
+        }
+
+        return deck;
+    }
+
+    private void OnCardSelected(Card card)
+    {
+        selections = new Dictionary<Player, Card>
+        {
+            { HumanPlayer, card }
+        };
+
+        for (int i = 1; i < players.Count; i++)
+        {
+            Card randomCard = activeCards[Random.Range(0, activeCards.Count)];
+            selections.Add(players[i], randomCard);
+        }
+
+        ResolveRound();
+    }
+
+    public void ResolveRound()
+    {
+        if (selections == null || selections.Count == 0)
+        {
+            Debug.LogError("Selections are not valid");
+            return;
+        }
+
+        var groupedByCard = selections.GroupBy(kvp => kvp.Value).ToDictionary(g => g.Key, g => g.Select(kvp => kvp.Key).ToList());
+
+        foreach (var (card, pickers) in groupedByCard)
+        {
+            if (card.Value == CardValue.Special)
+                ResolveSpecialCard(pickers);
+
+            else
+                ResolveValueCard(card.Value, pickers);
+        }
+
+        foreach (var p in players)
+            Debug.Log($"{p}: {p.Score}");
+
+        foreach (var card in groupedByCard.Keys)
+        {
+            activeCards.Remove(card);
+            Destroy(card.gameObject);
+        }
+
+        // CheckConditionState;
+
+        if (CheckGameCondition())
+        {
+            Debug.Log("Game Cycle Ended.");
+            return;
+        }
+    }
+
+    private void ResolveValueCard(CardValue value, List<Player> pickers)
+    {
+        int totalValue = GetPointValue(value);
+        int share = Mathf.Max(totalValue / pickers.Count, 1);
+
+        foreach (var player in pickers)
+            player.Score += share;
+
+        Debug.Log($"{value} card ({totalValue}pts) split between {pickers.Count} player(s) > {share} each.");
+    }
+
+    private void ResolveSpecialCard(List<Player> pickers)
+    {
+        const int specialAmount = 5;
+
+        if (pickers.Count != 1)
+        {
+            Debug.Log($"Special card picked by {pickers.Count} players. No effect.");
+            return;
+        }
+
+        Player picker = pickers[0];
+        int leadScore = players.Max(p => p.Score);
+        List<Player> leaders = players.Where(p => p.Score == leadScore).ToList();
+
+        // TODO: What happens if no one has any points?
+        if (leaders.Count == players.Count)
+        {
+            return;
+        }
+
+        // Picker is the sole lead so they just gain 5
+        if (leaders.Count == 1 && leaders[0] == picker)
+        {
+            picker.Score += specialAmount;
+            Debug.Log($"{picker} is sole leader > gains {specialAmount} pts.");
+            return;
+        }
+
+        // Picker is one of multiple leaders, so they steal from OTHER leaders
+        if (leaders.Contains(picker))
+            leaders.Remove(picker);
+
+        StealPoints(picker, leaders, specialAmount);
+    }
+
+    private void StealPoints(Player picker, List<Player> targets, int totalAmount)
+    {
+        if (targets.Count == 0)
+            return;
+
+        // Distribute the cost
+        int baseSteal = totalAmount / targets.Count;
+        int remainder = totalAmount % targets.Count;
+
+        foreach (var target in targets)
+        {
+            int amount = baseSteal + (remainder > 0 ? 1 : 0);
+
+            if (remainder > 0)
+                remainder--;
+
+            target.Score -= amount;
+            Debug.Log($"{picker} steals {amount} pts from {target}.");
+        }
+
+        picker.Score += totalAmount;
+        Debug.Log($"{picker} gains {totalAmount} pts from special card.");
+    }
+    
+    public bool CheckGameCondition()
+    {
+        // If there are no cards left
+        if (activeCards.Count == 0)
+        {
+            AnnounceWinners(players);
+            return true;
+        }
+
+        // If a player(s) has reached 20 or more points
+        var candidates = players.Where(p => p.Score > WINNING_SCORE).ToList();
+
+        if (candidates.Count > 0)
+        {
+            AnnounceWinners(players);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void AnnounceWinners(List<Player> candidates)
+    {
+        int winningScore = candidates.Max(p => p.Score);
+        var winners = candidates.Where(p => p.Score == winningScore).ToList();
+        string winnerNames = string.Join(", ", winners.Select(w => w.ToString()));
+        Debug.Log($"The game is over! Winner(s): {winnerNames} with {winningScore} points!");
+    }
+
+    private static int GetPointValue(CardValue value) => value switch
+    {
+        CardValue.One => 1,
+        CardValue.Three => 3,
+        CardValue.Five => 5,
+        CardValue.Ten => 10,
+        _ => 0
+    };
 }

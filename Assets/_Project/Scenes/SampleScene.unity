@@ -476,6 +476,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1095226508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1095226509}
+  - component: {fileID: 1095226510}
+  m_Layer: 0
+  m_Name: Gameplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1095226509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095226508}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2023019250}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1095226510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095226508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0933d1deb14c7324584ab69e085e719d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay
+  totalCards: 12
+  gridColumns: 4
+  spacing: {x: 2, y: 3}
+  cardContainer: {fileID: 1095226509}
+  cardPrefab: {fileID: 4401613250398120656, guid: c1775895070029f42b317cd6754d779f, type: 3}
+  cardVisuals:
+  - value: 0
+    sprite: {fileID: -589106887, guid: 4ded69ede3505754496cc353a1af8a1e, type: 3}
+  - value: 1
+    sprite: {fileID: -477935080, guid: 4ded69ede3505754496cc353a1af8a1e, type: 3}
+  - value: 2
+    sprite: {fileID: 1406700430, guid: 4ded69ede3505754496cc353a1af8a1e, type: 3}
+  - value: 3
+    sprite: {fileID: -751789812, guid: 4ded69ede3505754496cc353a1af8a1e, type: 3}
+  - value: 4
+    sprite: {fileID: -207801120, guid: 4ded69ede3505754496cc353a1af8a1e, type: 3}
 --- !u!1 &1189235194
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,6 +611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   <InputManager>k__BackingField: {fileID: 1189235195}
   <UIManager>k__BackingField: {fileID: 603675764}
+  <Gameplay>k__BackingField: {fileID: 1095226510}
 --- !u!4 &2023019250
 Transform:
   m_ObjectHideFlags: 0
@@ -566,6 +627,7 @@ Transform:
   m_Children:
   - {fileID: 1189235196}
   - {fileID: 603675763}
+  - {fileID: 1095226509}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807

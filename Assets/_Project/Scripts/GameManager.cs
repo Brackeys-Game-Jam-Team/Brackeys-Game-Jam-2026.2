@@ -6,9 +6,9 @@ public class GameManager : MonoBehaviour
 
     [field: SerializeField] public InputManager InputManager { get; private set; }
     [field: SerializeField] public UIManager UIManager { get; private set; }
+    [field: SerializeField] public Gameplay Gameplay { get; private set; }
 
     public StateMachine StateMachine { get; private set; }
-    public Gameplay Gameplay { get; private set; } = new();
     
     private void Awake()
     {
