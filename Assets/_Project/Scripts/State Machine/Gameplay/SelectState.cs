@@ -6,15 +6,13 @@ public class SelectState : State<GameManager>
 
     public override void Enter()
     {
-        base.Enter();
         GameManager.Instance.Gameplay.turnCount++;
+        GameManager.Instance.CanSelectCard = true;
         // open score turn count overlay UI
-        // enable card selection
     }
 
     public override void Exit()
     {
-        base.Exit();
-        // disable card selection
+        GameManager.Instance.CanSelectCard = false;
     }
 }

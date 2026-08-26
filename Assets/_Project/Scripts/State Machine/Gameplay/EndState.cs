@@ -9,6 +9,8 @@ public class EndState : State<GameManager>
     public override void Enter()
     {
         var gameplay = GameManager.Instance.Gameplay;
-        // Announce winners
+        gameplay.AnnounceWinners();
+        // open End UI here
+        //gameplay.Winners;
     }
 }

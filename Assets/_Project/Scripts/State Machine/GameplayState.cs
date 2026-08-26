@@ -13,8 +13,9 @@ public class GameplayState : StateMachine
 
     public override void Enter()
     {
-        base.Enter();
         GameManager.Instance.InputManager.EnablePlayer();
+        GameManager.Instance.LoadScene("GameplayScene");
+        base.Enter();
     }
 
     public override void Exit()

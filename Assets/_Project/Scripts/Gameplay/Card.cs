@@ -32,6 +32,7 @@ public class Card : MonoBehaviour
 
     private void OnMouseDown()
     {
-        _onClickCallback?.Invoke(this);
+        if (GameManager.Instance.CanSelectCard)
+            _onClickCallback?.Invoke(this);
     }
 }

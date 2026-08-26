@@ -37,7 +37,6 @@ public class Gameplay : MonoBehaviour
 
     private const int WINNING_SCORE = 20;
 
-    // Unused at the moment, will be used during EndState
     public List<Player> Winners { get; private set; } = new();
     private Player HumanPlayer => players[0];
 
@@ -125,8 +124,10 @@ public class Gameplay : MonoBehaviour
             selections.Add(players[i], randomCard);
         }
 
-        // Will place a function to change to the CompareState here
-        ResolveRound();
+        var gs = GameManager.Instance.StateMachine.GetState<GameplayState>();
+        gs.ChangeState<CompareState>();
+
+        //ResolveRound();
     }
 
     // Called during CompareState, applies score, special card, updates the score
@@ -159,12 +160,15 @@ public class Gameplay : MonoBehaviour
             Destroy(card.gameObject);
         }
 
-        // Will place a function to change to the CheckConditionState here
-        if (CheckGameCondition())
-        {
-            Debug.Log("Game Cycle Ended.");
-            return;
-        }
+        var gs = GameManager.Instance.StateMachine.GetState<GameplayState>();
+        gs.ChangeState<CheckConditionState>();
+
+
+        //if (CheckGameCondition())
+        //{
+        //    Debug.Log("Game Cycle Ended.");
+        //    return;
+        //}
     }
 
     private void ResolveValueCard(CardValue value, List<Player> pickers)
@@ -237,34 +241,20 @@ public class Gameplay : MonoBehaviour
         Debug.Log($"{picker} gains {totalAmount} pts from special card.");
     }
     
-    // (UNFINISHED) Called during the CheckConditionState to determine whether the game should continue or end
+    // Called during the CheckConditionState to determine whether the game should continue or end
     public bool CheckGameCondition()
     {
-        // If there are no cards left
-        if (activeCards.Count == 0)
-        {
-            AnnounceWinners(players);
-            return true;
-        }
-
-        // If a player(s) has reached 20 or more points
-        var candidates = players.Where(p => p.Score > WINNING_SCORE).ToList();
-
-        if (candidates.Count > 0)
-        {
-            AnnounceWinners(players);
-            return true;
-        }
-
-        return false;
+        bool outOfCards = activeCards.Count == 0;
+        bool scoreReached = players.Where(p => p.Score >= WINNING_SCORE).ToList().Count > 0;
+        return outOfCards || scoreReached;
     }
 
     // Considering modifying this for the EndState
-    private void AnnounceWinners(List<Player> candidates)
+    public void AnnounceWinners()
     {
-        int winningScore = candidates.Max(p => p.Score);
-        var winners = candidates.Where(p => p.Score == winningScore).ToList();
-        string winnerNames = string.Join(", ", winners.Select(w => w.ToString()));
+        int winningScore = players.Max(p => p.Score);
+        Winners = players.Where(p => p.Score == winningScore).ToList();
+        string winnerNames = string.Join(", ", Winners.Select(w => w.ToString()));
         Debug.Log($"The game is over! Winner(s): {winnerNames} with {winningScore} points!");
     }
 

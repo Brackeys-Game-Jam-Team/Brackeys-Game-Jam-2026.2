@@ -10,6 +10,9 @@ public class MainMenuState : State<GameManager>
     {
         Debug.Log("Open the main menu UI");
         GameManager.Instance.InputManager.EnableUI();
+        GameManager.Instance.LoadScene("MainMenu");
+
+
         owner.ChangeState<GameplayState>();
     }
 }
