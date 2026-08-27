@@ -31,7 +31,7 @@ public class Gameplay : MonoBehaviour
 
     public int turnCount;
     private readonly List<Card> activeCards = new();
-    private readonly List<Player> players = new();
+    public readonly List<Player> players = new();
     private Dictionary<CardValue, Sprite> visuals;
     private Dictionary<Player, Card> selections;
 
@@ -160,7 +160,16 @@ public class Gameplay : MonoBehaviour
 
         // Update score count UI here
         foreach (var p in players)
+        {
             Debug.Log($"{p}: {p.Score}");
+        }
+
+        // Update UI texts outside of the for loop above
+        ScoreTurnCountOverlay scoreTurnCountOverlayObject = FindAnyObjectByType<ScoreTurnCountOverlay>();
+        if (scoreTurnCountOverlayObject != null) scoreTurnCountOverlayObject.UpdatePlayerScoreText();
+
+        AIScoreOverlay aiScoreOverlayObject = FindAnyObjectByType<AIScoreOverlay>();
+        if (aiScoreOverlayObject != null) aiScoreOverlayObject.UpdateAIScoreTexts();
 
         foreach (var card in groupedByCard.Keys)
         {
