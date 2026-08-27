@@ -6,7 +6,7 @@ public class EndState : State<GameManager>
 
     public override void Enter()
     {
-        var gameplay = context.Gameplay;
+        var gameplay = GameManager.Instance.Gameplay;
         gameplay.AnnounceWinners();
         // open End UI here
         //gameplay.Winners;

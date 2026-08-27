@@ -54,16 +54,24 @@ public class Gameplay : MonoBehaviour
         ClearBoard();
         var deck = GenerateDeck(totalCards);
 
+        int rows = Mathf.CeilToInt((float)deck.Count / gridColumns);
+
+        float gridWidth = (gridColumns - 1) * spacing.x;
+        float gridHeight = (rows - 1) * spacing.y;
+
+        Vector3 centerOffset = new(-gridWidth * 0.5f, gridHeight * 0.5f, 0f);
+
         for (int i = 0; i < deck.Count; i++)
         {
             int col = i % gridColumns;
             int row = i / gridColumns;
-            Vector3 position = new(col * spacing.x, -row * spacing.y, 0f);
+            Vector3 position = new Vector3(col * spacing.x, -row * spacing.y, 0f) + centerOffset;
 
             CardValue value = deck[i];
             Sprite sprite = visuals.GetValueOrDefault(value);
 
-            Card cardInstance = Instantiate(cardPrefab, position, Quaternion.identity, cardContainer);
+            Card cardInstance = Instantiate(cardPrefab, cardContainer);
+            cardInstance.transform.localPosition = position;
             cardInstance.Initialize(value, sprite, OnCardSelected);
             activeCards.Add(cardInstance);
         }

@@ -228,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &718619090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,13 +300,14 @@ GameObject:
   m_Component:
   - component: {fileID: 775291460}
   - component: {fileID: 775291461}
+  - component: {fileID: 775291462}
   m_Layer: 0
   m_Name: TextOverlayScript
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &775291460
 Transform:
   m_ObjectHideFlags: 0
@@ -334,13 +335,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e8c4659c2eebf44a9fdf94f56607c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  score: 0
-  turnCount: 0
   scoreText: {fileID: 1821819943}
   turnCountText: {fileID: 1903643987}
   textOverlayImage: {fileID: 1720829993}
   imageWidthForScorePadding: 40
   imageWidthForTurnCountPadding: 40
+--- !u!225 &775291462
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775291459}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &914741629
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1317631952
 MonoBehaviour:
   m_ObjectHideFlags: 0

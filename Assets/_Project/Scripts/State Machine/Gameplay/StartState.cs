@@ -6,8 +6,8 @@ public class StartState : State<GameManager>
 
     public override void Enter()
     {
-        context.Gameplay.GenerateCards();
-        context.UIManager.ShowScreen<ScoreTurnCountOverlay>();
+        GameManager.Instance.Gameplay.GenerateCards();
+        GameManager.Instance.UIManager.ShowScreen<ScoreTurnCountOverlay>();
         owner.ChangeState<SelectState>();
     }
 }

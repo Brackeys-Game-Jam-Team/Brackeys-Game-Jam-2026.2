@@ -6,6 +6,6 @@ public class CompareState : State<GameManager>
 
     public override void Enter()
     {
-        context.Gameplay.ResolveRound();
+        GameManager.Instance.Gameplay.ResolveRound();
     }
 }
