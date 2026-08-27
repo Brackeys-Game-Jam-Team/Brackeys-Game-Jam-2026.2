@@ -95,7 +95,10 @@ public class StateMachine : IState
         }
 
         if (CurrentState == state)
+        {
+            Debug.LogError($"Can't change to the same state");
             return;
+        }
 
         CurrentState?.Exit();
         //PreviousStateType = CurrentStateType;

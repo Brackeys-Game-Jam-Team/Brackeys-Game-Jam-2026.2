@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreTurnCountOverlay : MonoBehaviour
+public class ScoreTurnCountOverlay : UIScreen
 {
     [Header("UI elements")]
     [SerializeField] private TextMeshProUGUI scoreText = null;
@@ -24,8 +24,7 @@ public class ScoreTurnCountOverlay : MonoBehaviour
     // TODO: Find player object to set score text
     private Player player = null;
 
-
-    void Start()
+    protected override void OnShow()
     {
         // Prevent errors by checking if one of the objects is null
         if (textOverlayImage == null || scoreText == null || turnCountText == null || gameplay == null || player == null) return;

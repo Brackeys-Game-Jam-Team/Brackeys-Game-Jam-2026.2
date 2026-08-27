@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,9 +13,12 @@ public class GameManager : MonoBehaviour
 
     public StateMachine StateMachine { get; private set; }
     public string CurrentSceneName { get; private set; }
-    public bool IsLoadingScene { get; private set; }
+    public bool IsLoading { get; private set; }
     public bool CanSelectCard { get; set; }
-    
+
+    public event Action<string> OnSceneLoaded;
+    public event Action<string> OnSceneUnloaded;
+
     private void Awake()
     {
         if (Instance != null)
@@ -29,12 +33,18 @@ public class GameManager : MonoBehaviour
         StateMachine = new(this);
         StateMachine.AddState(new MainMenuState(StateMachine));
         StateMachine.AddState(new GameplayState(StateMachine));
+        StateMachine.AddState(new LoadingState(StateMachine));
         StateMachine.SetDefaultState<MainMenuState>();
     }
 
     private void Start()
     {
         StateMachine.Enter();
+    }
+
+    private void Update()
+    {
+        StateMachine?.Update(Time.deltaTime);
     }
 
     public Coroutine LoadScene(string sceneName, bool unloadCurrent = true)
@@ -44,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator LoadSceneRoutine(string sceneName, bool unloadCurrent)
     {
-        IsLoadingScene = true;
+        IsLoading = true;
 
         // Unload old content scene
         if (unloadCurrent && !string.IsNullOrEmpty(CurrentSceneName))
@@ -56,6 +66,8 @@ public class GameManager : MonoBehaviour
                 while (!unload.isDone)
                     yield return null;
             }
+
+            OnSceneUnloaded?.Invoke(CurrentSceneName);
         }
 
         // Load new content scene
@@ -70,12 +82,12 @@ public class GameManager : MonoBehaviour
         while (!load.isDone)
             yield return null;
 
-        // Set new scene as active
+        // Set new scene as active (so new objects there)
         Scene loaded = SceneManager.GetSceneByName(sceneName);
         SceneManager.SetActiveScene(loaded);
 
         CurrentSceneName = sceneName;
-        IsLoadingScene = false;
+        IsLoading = false;
+        OnSceneLoaded?.Invoke(sceneName);
     }
-
 }

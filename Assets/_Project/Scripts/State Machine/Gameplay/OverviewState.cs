@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class OverviewState : State<GameManager>
 {
-    private InputSystem_Actions.PlayerActions PlayerActions => GameManager.Instance.InputManager.InputActions.Player;
+    private InputSystem_Actions.PlayerActions PlayerActions => context.InputManager.InputActions.Player;
 
     public OverviewState(StateMachine owner) : base(owner)
     {

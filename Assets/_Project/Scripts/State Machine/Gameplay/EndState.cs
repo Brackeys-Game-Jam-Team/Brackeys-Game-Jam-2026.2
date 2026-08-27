@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class EndState : State<GameManager>
 {
     public EndState(StateMachine owner) : base(owner)
@@ -8,7 +6,7 @@ public class EndState : State<GameManager>
 
     public override void Enter()
     {
-        var gameplay = GameManager.Instance.Gameplay;
+        var gameplay = context.Gameplay;
         gameplay.AnnounceWinners();
         // open End UI here
         //gameplay.Winners;
