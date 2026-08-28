@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public InputManager InputManager { get; private set; }
     [field: SerializeField] public UIManager UIManager { get; private set; }
     [field: SerializeField] public Gameplay Gameplay { get; private set; }
+    [field: SerializeField] public AudioManager AudioManager { get; private set; }
 
     public StateMachine StateMachine { get; private set; }
+    public PlayerRegistry Players { get; private set; }
     public string CurrentSceneName { get; private set; }
     public bool IsLoading { get; private set; }
     public bool CanSelectCard { get; set; }
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        Players = new();
 
         StateMachine = new(this);
         StateMachine.AddState(new MainMenuState(StateMachine));
@@ -59,6 +63,7 @@ public class GameManager : MonoBehaviour
         // Unload old content scene
         if (unloadCurrent && !string.IsNullOrEmpty(CurrentSceneName))
         {
+            Players.ClearCharacters();
             AsyncOperation unload = SceneManager.UnloadSceneAsync(CurrentSceneName);
 
             if (unload != null)
@@ -89,5 +94,30 @@ public class GameManager : MonoBehaviour
         CurrentSceneName = sceneName;
         IsLoading = false;
         OnSceneLoaded?.Invoke(sceneName);
+    }
+
+    public void RegisterPlayer(Player player)
+    {
+        //Player = player;
+        Players.Register(player);
+        //OnPlayerRegistered?.Invoke();
+    }
+
+    public void UnregisterPlayer()
+    {
+        //if (Player != null)
+        //    Characters.Unregister(Player);
+
+        //Player = null;
+    }
+
+    public void RegisterCharacter(Player character)
+    {
+        Players.Register(character);
+    }
+
+    public void UnregisterCharacter(Player character)
+    {
+        Players.Unregister(character);
     }
 }

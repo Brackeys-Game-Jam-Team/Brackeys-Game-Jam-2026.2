@@ -31,7 +31,7 @@ public class Gameplay : MonoBehaviour
 
     public int turnCount;
     private readonly List<Card> activeCards = new();
-    private readonly List<Player> players = new();
+    public List<Player> players = new();
     private Dictionary<CardValue, Sprite> visuals;
     private Dictionary<Player, Card> selections;
 
@@ -43,13 +43,25 @@ public class Gameplay : MonoBehaviour
     private void Awake()
     {
         visuals = cardVisuals.ToDictionary(item => item.value, item => item.sprite);
-
-        for (int i = 0; i < 4; i++)
-            players.Add(new Player(i + 1, isHuman: i == 0));
     }
 
     // Called during the StartState, generates cards and spawns them to the map
-    public void GenerateCards()
+    public void StartGame()
+    {
+        players = GameManager.Instance.Players.GetAll<Player>();
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].Initialize(i + 1, isHuman: i == 0);
+            Debug.Log(players[i].name);
+        }
+
+
+        turnCount = 0;
+        GenerateCards();
+    }
+
+    private void GenerateCards()
     {
         ClearBoard();
         var deck = GenerateDeck(totalCards);

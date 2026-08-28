@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4ded69ede3505754496cc353a1af8a1e
+guid: 52f0575875d9df542913d04b7e4d5867
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cards_0
+      name: purple alien_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 714
-        height: 1080
+        width: 760
+        height: 760
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 853bffb98de1d5a4d8a5767407e25e9d
-      internalID: -589106887
+      spriteID: 99b42ee0e69933f41acc0eff9d35f242
+      internalID: 467790703
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cards_1
+      name: purple alien_1
       rect:
         serializedVersion: 2
-        x: 714
+        x: 760
         y: 0
-        width: 714
-        height: 1080
+        width: 760
+        height: 760
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c7f92e5ea7166349852d068d04c45ce
-      internalID: -477935080
+      spriteID: c29a50527b3546b4b9387a3dc06badbe
+      internalID: -1143437560
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cards_2
+      name: purple alien_2
       rect:
         serializedVersion: 2
-        x: 1428
+        x: 1520
         y: 0
-        width: 714
-        height: 1080
+        width: 760
+        height: 760
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,52 +169,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a4b607dbf76d1b41ad278c9322d867f
-      internalID: 1406700430
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cards_3
-      rect:
-        serializedVersion: 2
-        x: 2142
-        y: 0
-        width: 714
-        height: 1080
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 479caec7707b89a44b6e9842b9ff7a2e
-      internalID: -751789812
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cards_4
-      rect:
-        serializedVersion: 2
-        x: 2856
-        y: 0
-        width: 714
-        height: 1080
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1766b5f3765f21347a65f7d51d7eaeb3
-      internalID: -207801120
+      spriteID: 34457a3698e309f4da866b9aa36d37b1
+      internalID: -1222228923
       vertices: []
       indices: 
       edges: []
@@ -223,7 +179,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8a9006ee0cffd2c478147097a7a22850
+    spriteID: 300b7efcb6aa5c140af4f938458173f6
     internalID: 0
     vertices: []
     indices: 
@@ -233,13 +189,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":1.0},"gridSpriteSize":{"x":714.0,"y":1080.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":1.0},"gridSpriteSize":{"x":760.0,"y":760.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      cards_0: -589106887
-      cards_1: -477935080
-      cards_2: 1406700430
-      cards_3: -751789812
-      cards_4: -207801120
+      purple alien_0: 467790703
+      purple alien_1: -1143437560
+      purple alien_2: -1222228923
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
