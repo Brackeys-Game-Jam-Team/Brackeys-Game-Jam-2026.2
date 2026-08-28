@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class MainMenuScreen : UIScreen
 {
     [SerializeField] private Button playButton;
-    [SerializeField] private Button settingsButton;
     [SerializeField] private Button creditsButton;
     [SerializeField] private Button quitButton;
 
@@ -12,7 +11,6 @@ public class MainMenuScreen : UIScreen
     {
         base.Awake();
         playButton.onClick.AddListener(OnPlayClicked);
-        settingsButton.onClick.AddListener(OnSettingsClicked);
         creditsButton.onClick.AddListener(OnCreditsClicked);
         quitButton.onClick.AddListener(OnQuitClicked);
     }
@@ -22,14 +20,10 @@ public class MainMenuScreen : UIScreen
         GameManager.Instance.StateMachine.TransitionToScene<GameplayState>("GameplayScene");
     }
 
-    private void OnSettingsClicked()
-    {
-        Debug.Log("Open Settings Menu");
-    }
-
     private void OnCreditsClicked()
     {
-        Debug.Log("Open Credits Menu");
+        GameManager.Instance.UIManager.ClearStack();
+        GameManager.Instance.UIManager.PushScreen<CreditsMenuScreen>();
     }
 
     private void OnQuitClicked()
