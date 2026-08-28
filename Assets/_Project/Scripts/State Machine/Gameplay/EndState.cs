@@ -9,6 +9,7 @@ public class EndState : State<GameManager>
         var gameplay = GameManager.Instance.Gameplay;
         gameplay.AnnounceWinners();
         // open End UI here
-        //gameplay.Winners;
+        GameManager.Instance.UIManager.PushScreen<ResultsScreen>();
+        GameManager.Instance.UIManager.HideScreen<ScoreTurnCountOverlay>();
     }
 }
