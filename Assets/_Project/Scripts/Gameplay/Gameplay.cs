@@ -172,7 +172,16 @@ public class Gameplay : MonoBehaviour
 
         // Update score count UI here
         foreach (var p in players)
+        {
             Debug.Log($"{p}: {p.Score}");
+        }
+
+        // Update UI texts outside of the for loop above
+        ScoreTurnCountOverlay scoreTurnCountOverlayObject = FindAnyObjectByType<ScoreTurnCountOverlay>();
+        if (scoreTurnCountOverlayObject != null) scoreTurnCountOverlayObject.UpdatePlayerScoreText();
+
+        AIScoreOverlay aiScoreOverlayObject = FindAnyObjectByType<AIScoreOverlay>();
+        if (aiScoreOverlayObject != null) aiScoreOverlayObject.UpdateAIScoreTexts();
 
         foreach (var card in groupedByCard.Keys)
         {
