@@ -164,6 +164,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  emotionSprites:
+  - value: 0
+    sprite: {fileID: 21300000, guid: 75e37aee834b9c041a9f92c9f88f384f, type: 3}
+  - value: 1
+    sprite: {fileID: 21300000, guid: 748321fa78b0fc64cafbec4f30bed4c8, type: 3}
+  - value: 2
+    sprite: {fileID: 21300000, guid: 9f9bb5de707f24840a5c671535a94b5c, type: 3}
+  - value: 3
+    sprite: {fileID: 0}
+  spriteRenderer: {fileID: 202657715}
+  <Id>k__BackingField: 3
 --- !u!212 &202657715
 SpriteRenderer:
   serializedVersion: 3
@@ -485,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e8c4659c2eebf44a9fdf94f56607c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  scoreText: {fileID: 1821819943}
+  playerScoreText: {fileID: 0}
   turnCountText: {fileID: 1903643987}
   textOverlayImage: {fileID: 1720829993}
   imageWidthForScorePadding: 40
@@ -673,6 +684,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  emotionSprites: []
+  spriteRenderer: {fileID: 0}
+  <Id>k__BackingField: 1
 --- !u!1 &1178152886
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,6 +732,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  emotionSprites:
+  - value: 0
+    sprite: {fileID: 21300000, guid: 12d8d048e889ba54db4ad764b5d583ba, type: 3}
+  - value: 1
+    sprite: {fileID: 21300000, guid: 3cd2da2f93954d24db96feadb5926106, type: 3}
+  - value: 2
+    sprite: {fileID: 21300000, guid: 0b309883d3b95c041ada3af6075fe97c, type: 3}
+  - value: 3
+    sprite: {fileID: 0}
+  spriteRenderer: {fileID: 1178152889}
+  <Id>k__BackingField: 2
 --- !u!212 &1178152889
 SpriteRenderer:
   serializedVersion: 3
@@ -1018,6 +1043,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  emotionSprites:
+  - value: 0
+    sprite: {fileID: 21300000, guid: a01a315d418f2fd49a5360e3876c07f9, type: 3}
+  - value: 1
+    sprite: {fileID: 21300000, guid: 19bb41b9e9442644792e5d57d862f08e, type: 3}
+  - value: 2
+    sprite: {fileID: 21300000, guid: 6a79bdac27fac674fb943dcea2112e36, type: 3}
+  - value: 3
+    sprite: {fileID: 0}
+  spriteRenderer: {fileID: 1320821624}
+  <Id>k__BackingField: 4
 --- !u!212 &1320821624
 SpriteRenderer:
   serializedVersion: 3

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -49,13 +50,10 @@ public class Gameplay : MonoBehaviour
     public void StartGame()
     {
         players = GameManager.Instance.Players.GetAll<Player>();
+        players = players.OrderBy(p => p.Id).ToList();
 
         for (int i = 0; i < players.Count; i++)
-        {
-            players[i].Initialize(i + 1, isHuman: i == 0);
-            Debug.Log(players[i].name);
-        }
-
+            players[i].Initialize(isHuman: i == 0);
 
         turnCount = 0;
         GenerateCards();
@@ -89,7 +87,7 @@ public class Gameplay : MonoBehaviour
         }
     }
 
-    private void ClearBoard()
+    public void ClearBoard()
     {
         foreach (var card in activeCards)
         {
@@ -153,10 +151,15 @@ public class Gameplay : MonoBehaviour
     // Called during CompareState, applies score, special card, updates the score
     public void ResolveRound()
     {
+        StartCoroutine(ResolveTurn());
+    }
+
+    private IEnumerator ResolveTurn()
+    {
         if (selections == null || selections.Count == 0)
         {
             Debug.LogError("Selections are not valid");
-            return;
+            yield break;
         }
 
         var groupedByCard = selections.GroupBy(kvp => kvp.Value).ToDictionary(g => g.Key, g => g.Select(kvp => kvp.Key).ToList());
@@ -170,18 +173,36 @@ public class Gameplay : MonoBehaviour
                 ResolveValueCard(card.Value, pickers);
         }
 
-        // Update score count UI here
-        foreach (var p in players)
+        var pickedValueCards = selections.Values.Where(c => c.Value != CardValue.Special).Select(c => c.Value).ToList();
+        CardValue? lowestPickedValue = null;
+
+        if (pickedValueCards.Count > 0)
+            lowestPickedValue = pickedValueCards.Max();
+
+        foreach (var player in players)
         {
-            Debug.Log($"{p}: {p.Score}");
+            Card chosenCard = selections[player];
+            int grabberCount = groupedByCard[chosenCard].Count;
+            bool isSolo = grabberCount == 1;
+            bool isShared = grabberCount > 1;
+            bool gotLowestCard = lowestPickedValue.HasValue && chosenCard.Value == lowestPickedValue.Value;
+
+            // Can be changed later
+            if (isShared)
+                yield return player.SetEmotion(Emotion.Angry);
+
+            else if (gotLowestCard)
+                yield return player.SetEmotion(Emotion.Sad);
         }
 
         // Update UI texts outside of the for loop above
         ScoreTurnCountOverlay scoreTurnCountOverlayObject = FindAnyObjectByType<ScoreTurnCountOverlay>();
-        if (scoreTurnCountOverlayObject != null) scoreTurnCountOverlayObject.UpdatePlayerScoreText();
+        if (scoreTurnCountOverlayObject != null)
+            scoreTurnCountOverlayObject.UpdatePlayerScoreText();
 
         AIScoreOverlay aiScoreOverlayObject = FindAnyObjectByType<AIScoreOverlay>();
-        if (aiScoreOverlayObject != null) aiScoreOverlayObject.UpdateAIScoreTexts();
+        if (aiScoreOverlayObject != null)
+            aiScoreOverlayObject.UpdateAIScoreTexts();
 
         foreach (var card in groupedByCard.Keys)
         {
@@ -191,15 +212,9 @@ public class Gameplay : MonoBehaviour
 
         var gs = GameManager.Instance.StateMachine.GetState<GameplayState>();
         gs.ChangeState<CheckConditionState>();
-
-
-        //if (CheckGameCondition())
-        //{
-        //    Debug.Log("Game Cycle Ended.");
-        //    return;
-        //}
     }
 
+    // Call target.SetEmotion(Emotion.Happy); for any player who got the solo pick, and angry for those who share or got the lowest value card
     private void ResolveValueCard(CardValue value, List<Player> pickers)
     {
         int totalValue = GetPointValue(value);
@@ -207,8 +222,6 @@ public class Gameplay : MonoBehaviour
 
         foreach (var player in pickers)
             player.Score += share;
-
-        Debug.Log($"{value} card ({totalValue}pts) split between {pickers.Count} player(s) > {share} each.");
     }
 
     private void ResolveSpecialCard(List<Player> pickers)
@@ -243,13 +256,13 @@ public class Gameplay : MonoBehaviour
         if (leaders.Contains(picker))
             leaders.Remove(picker);
 
-        StealPoints(picker, leaders, specialAmount);
+        StartCoroutine(StealPoints(picker, leaders, specialAmount));
     }
 
-    private void StealPoints(Player picker, List<Player> targets, int totalAmount)
+    private IEnumerator StealPoints(Player picker, List<Player> targets, int totalAmount)
     {
         if (targets.Count == 0)
-            return;
+            yield break;
 
         // Distribute the cost
         int baseSteal = totalAmount / targets.Count;
@@ -263,11 +276,11 @@ public class Gameplay : MonoBehaviour
                 remainder--;
 
             target.Score -= amount;
-            Debug.Log($"{picker} steals {amount} pts from {target}.");
+
+            yield return target.SetEmotion(Emotion.Sad);
         }
 
         picker.Score += totalAmount;
-        Debug.Log($"{picker} gains {totalAmount} pts from special card.");
     }
     
     // Called during the CheckConditionState to determine whether the game should continue or end

@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,10 +18,9 @@ public class ResultsScreen : UIScreen
     [SerializeField] private Button playAgainButton;
     [SerializeField] private Button quitButton;
 
-    // DANIEL: Gameplay reference (keeps a list of players' scores and the turn count)
     private Gameplay gameplay => GameManager.Instance.Gameplay;
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         playAgainButton.onClick.AddListener(OnPlayAgainClicked);
@@ -47,17 +44,17 @@ public class ResultsScreen : UIScreen
 
             else if (gameplay.Winners[i].Score == gameplay.players[1].Score)
             {
-                playerScoreTexts[i].text = $"AI {1} Score: " + gameplay.Winners[i].Score;
+                playerScoreTexts[i].text = $"CPU{1} Score: " + gameplay.Winners[i].Score;
             }
 
             else if (gameplay.Winners[i].Score == gameplay.players[2].Score)
             {
-                playerScoreTexts[i].text = $"AI {2} Score: " + gameplay.Winners[i].Score;
+                playerScoreTexts[i].text = $"CPU{2} Score: " + gameplay.Winners[i].Score;
             }
 
             else if (gameplay.Winners[i].Score == gameplay.players[3].Score)
             {
-                playerScoreTexts[i].text = $"AI {3} Score: " + gameplay.Winners[i].Score;
+                playerScoreTexts[i].text = $"CPU{3} Score: " + gameplay.Winners[i].Score;
             }
 
             winnersPassed++;
@@ -92,29 +89,31 @@ public class ResultsScreen : UIScreen
 
             else if (scores[i] == gameplay.players[1].Score)
             {
-                playerScoreTexts[i].text = $"AI {1} Score: " + scores[i];
+                playerScoreTexts[i].text = $"CPU{1} Score: " + scores[i];
             }
 
             else if (scores[i] == gameplay.players[2].Score)
             {
-                playerScoreTexts[i].text = $"AI {2} Score: " + scores[i];
+                playerScoreTexts[i].text = $"CPU{2} Score: " + scores[i];
             }
 
             else if (scores[i] == gameplay.players[3].Score)
             {
-                playerScoreTexts[i].text = $"AI {3} Score: " + scores[i];
+                playerScoreTexts[i].text = $"CPU{3} Score: " + scores[i];
             }
         }
     }
 
     private void OnPlayAgainClicked()
     {
-        //GameManager.Instance.StateMachine.GetState<GameplayState>();
-        //GameManager.Instance.StateMachine.ChangeState<StartState>();
+        GameManager.Instance.UIManager.ClearStack();
+        var gs = GameManager.Instance.StateMachine.GetState<GameplayState>();
+        gs.ChangeState<StartState>();
     }
 
     private void OnQuitClicked()
     {
+        GameManager.Instance.Gameplay.ClearBoard();
         GameManager.Instance.UIManager.ClearStack();
         GameManager.Instance.StateMachine.TransitionToScene<MainMenuState>("MainMenu");
     }

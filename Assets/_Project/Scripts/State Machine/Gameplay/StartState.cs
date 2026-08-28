@@ -8,6 +8,7 @@ public class StartState : State<GameManager>
     {
         GameManager.Instance.Gameplay.StartGame();
         GameManager.Instance.UIManager.ShowScreen<ScoreTurnCountOverlay>();
+        GameManager.Instance.AudioManager.PlayMusic("Gameplay");
         owner.ChangeState<SelectState>();
     }
 }

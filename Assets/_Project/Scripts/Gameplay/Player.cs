@@ -22,11 +22,11 @@ public class Player : MonoBehaviour
 
     [SerializeField] private List<EmotionData> emotionSprites;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [field: SerializeField] public int Id { get; private set; }
 
     private Dictionary<Emotion, Sprite> visuals;
 
     public int Score { get; set; }
-    public int Id { get; private set; }
     public bool IsHuman { get; private set; }
 
     private void Awake()
@@ -35,9 +35,9 @@ public class Player : MonoBehaviour
         GameManager.Instance.Players.Register(this);
     }
 
-    public void Initialize(int id, bool isHuman)
+    public void Initialize(bool isHuman)
     {
-        Id = id;
+        //Id = id;
         IsHuman = isHuman;
         Score = 0;
         StartCoroutine(SetEmotion(Emotion.Idle));
@@ -50,14 +50,20 @@ public class Player : MonoBehaviour
 
     public IEnumerator SetEmotion(Emotion emotion)
     {
+        if (spriteRenderer == null)
+            yield break;
+
         spriteRenderer.sprite = visuals[emotion];
 
         if (emotion == Emotion.Idle)
             yield break;
 
+        var am = GameManager.Instance.AudioManager;
+
         switch (emotion)
         {
             case Emotion.Angry:
+                //am.PlayVoice("");
                 //Angry voice here
                 break;
             case Emotion.Sad:
@@ -68,7 +74,7 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(.5f);
         spriteRenderer.sprite = visuals[Emotion.Idle];
     }
 }

@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class OverviewState : State<GameManager>
@@ -11,13 +10,13 @@ public class OverviewState : State<GameManager>
 
     public override void Enter()
     {
-        Debug.Log("Open the overview UI");
+        GameManager.Instance.UIManager.ShowScreen<OverviewScreen>();
         PlayerActions.Interact.performed += OnButtonPressed;
     }
 
     public override void Exit()
     {
-        Debug.Log("Hide the overview UI");
+        GameManager.Instance.UIManager.HideScreen<OverviewScreen>();
         PlayerActions.Interact.performed -= OnButtonPressed;
     }
 

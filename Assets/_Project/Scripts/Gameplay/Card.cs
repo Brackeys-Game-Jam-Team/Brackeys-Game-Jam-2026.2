@@ -22,12 +22,12 @@ public class Card : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Debug.Log($"Hover: {Value}");
+        //Debug.Log($"Hover: {Value}");
     }
 
     private void OnMouseExit()
     {
-        Debug.Log($"Unhover: {Value}");
+        //Debug.Log($"Unhover: {Value}");
     }
 
     private void OnMouseDown()
