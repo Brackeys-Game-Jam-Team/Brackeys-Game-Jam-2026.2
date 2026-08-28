@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public enum CardValue
 {
@@ -29,6 +30,8 @@ public class Gameplay : MonoBehaviour
     [SerializeField] private int totalCards = 12;
     [SerializeField] private int gridColumns = 3;
     [SerializeField] private Vector2 spacing = new(2f, 3f);
+    [SerializeField] private float dealDuration = 0.3f;
+    [SerializeField] private float delayBetweenCards = 0.05f;
 
     public int turnCount;
     private readonly List<Card> activeCards = new();
@@ -56,35 +59,66 @@ public class Gameplay : MonoBehaviour
             players[i].Initialize(isHuman: i == 0);
 
         turnCount = 0;
-        GenerateCards();
+        StartGenerateCards();
     }
 
-    private void GenerateCards()
+    private void StartGenerateCards()
+    {
+        StartCoroutine(GenerateCardsRoutine());
+    }
+
+    private IEnumerator GenerateCardsRoutine()
     {
         ClearBoard();
         var deck = GenerateDeck(totalCards);
-
         int rows = Mathf.CeilToInt((float)deck.Count / gridColumns);
-
         float gridWidth = (gridColumns - 1) * spacing.x;
         float gridHeight = (rows - 1) * spacing.y;
 
         Vector3 centerOffset = new(-gridWidth * 0.5f, gridHeight * 0.5f, 0f);
+        Vector3 startPosition = Vector3.zero;
 
         for (int i = 0; i < deck.Count; i++)
         {
             int col = i % gridColumns;
             int row = i / gridColumns;
-            Vector3 position = new Vector3(col * spacing.x, -row * spacing.y, 0f) + centerOffset;
+            Vector3 targetPosition = new Vector3(col * spacing.x, -row * spacing.y, 0f) + centerOffset;
 
             CardValue value = deck[i];
             Sprite sprite = visuals.GetValueOrDefault(value);
 
             Card cardInstance = Instantiate(cardPrefab, cardContainer);
-            cardInstance.transform.localPosition = position;
+            cardInstance.transform.localPosition = startPosition;
             cardInstance.Initialize(value, sprite, OnCardSelected);
             activeCards.Add(cardInstance);
+
+            StartCoroutine(AnimateCardToPosition(cardInstance.transform, startPosition, targetPosition, dealDuration));
+            yield return new WaitForSeconds(delayBetweenCards);
         }
+
+        var gs = GameManager.Instance.StateMachine.GetState<GameplayState>();
+        gs.ChangeState<SelectState>();
+    }
+
+    private IEnumerator AnimateCardToPosition(Transform cardTransform, Vector3 start, Vector3 target, float duration)
+    {
+        GameManager.Instance.AudioManager.PlaySFX("CardSpread");
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            if (cardTransform == null)
+                yield break;
+
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+            cardTransform.localPosition = Vector3.Lerp(start, target, t);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (cardTransform != null)
+            cardTransform.localPosition = target;
     }
 
     public void ClearBoard()
@@ -121,7 +155,7 @@ public class Gameplay : MonoBehaviour
         // Fisher-Yates Shuffle
         for (int i = deck.Count - 1; i > 0; i--)
         {
-            int randomIndex = UnityEngine.Random.Range(0, i + 1);
+            int randomIndex = Random.Range(0, i + 1);
             (deck[i], deck[randomIndex]) = (deck[randomIndex], deck[i]);
         }
 
@@ -181,11 +215,24 @@ public class Gameplay : MonoBehaviour
 
         foreach (var player in players)
         {
+            GameManager.Instance.AudioManager.PlaySFX("CardPickup");
             Card chosenCard = selections[player];
             int grabberCount = groupedByCard[chosenCard].Count;
             bool isSolo = grabberCount == 1;
             bool isShared = grabberCount > 1;
             bool gotLowestCard = lowestPickedValue.HasValue && chosenCard.Value == lowestPickedValue.Value;
+
+            var time = .5f;
+            var start = chosenCard.transform.localPosition;
+            float elapsed = 0f;
+
+            while (elapsed < time)
+            {
+                float t = Mathf.SmoothStep(0, 1, elapsed / time);
+                chosenCard.transform.position = Vector3.Lerp(start, player.transform.position, t);
+                elapsed += Time.fixedDeltaTime;
+                yield return null;
+            }
 
             // Can be changed later
             if (isShared)
@@ -195,12 +242,13 @@ public class Gameplay : MonoBehaviour
                 yield return player.SetEmotion(Emotion.Sad);
         }
 
-        // Update UI texts outside of the for loop above
         ScoreTurnCountOverlay scoreTurnCountOverlayObject = FindAnyObjectByType<ScoreTurnCountOverlay>();
+
         if (scoreTurnCountOverlayObject != null)
             scoreTurnCountOverlayObject.UpdatePlayerScoreText();
 
         AIScoreOverlay aiScoreOverlayObject = FindAnyObjectByType<AIScoreOverlay>();
+
         if (aiScoreOverlayObject != null)
             aiScoreOverlayObject.UpdateAIScoreTexts();
 
@@ -229,26 +277,16 @@ public class Gameplay : MonoBehaviour
         const int specialAmount = 5;
 
         if (pickers.Count != 1)
-        {
-            Debug.Log($"Special card picked by {pickers.Count} players. No effect.");
             return;
-        }
 
         Player picker = pickers[0];
         int leadScore = players.Max(p => p.Score);
         List<Player> leaders = players.Where(p => p.Score == leadScore).ToList();
 
-        // TODO: What happens if no one has any points?
-        if (leaders.Count == players.Count)
-        {
-            return;
-        }
-
         // Picker is the sole lead so they just gain 5
         if (leaders.Count == 1 && leaders[0] == picker)
         {
             picker.Score += specialAmount;
-            Debug.Log($"{picker} is sole leader > gains {specialAmount} pts.");
             return;
         }
 
@@ -277,7 +315,7 @@ public class Gameplay : MonoBehaviour
 
             target.Score -= amount;
 
-            yield return target.SetEmotion(Emotion.Sad);
+            StartCoroutine(target.SetEmotion(Emotion.Sad));
         }
 
         picker.Score += totalAmount;
@@ -291,13 +329,10 @@ public class Gameplay : MonoBehaviour
         return outOfCards || scoreReached;
     }
 
-    // Considering modifying this for the EndState
     public void AnnounceWinners()
     {
         int winningScore = players.Max(p => p.Score);
         Winners = players.Where(p => p.Score == winningScore).ToList();
-        string winnerNames = string.Join(", ", Winners.Select(w => w.ToString()));
-        Debug.Log($"The game is over! Winner(s): {winnerNames} with {winningScore} points!");
     }
 
     private static int GetPointValue(CardValue value) => value switch

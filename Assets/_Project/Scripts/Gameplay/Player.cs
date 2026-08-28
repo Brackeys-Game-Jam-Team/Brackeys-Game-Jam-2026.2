@@ -18,20 +18,21 @@ public class Player : MonoBehaviour
     {
         public Emotion value;
         public Sprite sprite;
+        public string voice;
     }
 
     [SerializeField] private List<EmotionData> emotionSprites;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [field: SerializeField] public int Id { get; private set; }
 
-    private Dictionary<Emotion, Sprite> visuals;
+    private Dictionary<Emotion, (Sprite, string)> visuals;
 
     public int Score { get; set; }
     public bool IsHuman { get; private set; }
 
     private void Awake()
     {
-        visuals = emotionSprites.ToDictionary(item => item.value, item => item.sprite);
+        visuals = emotionSprites.ToDictionary(item => item.value, item => (item.sprite, item.voice));
         GameManager.Instance.Players.Register(this);
     }
 
@@ -53,28 +54,12 @@ public class Player : MonoBehaviour
         if (spriteRenderer == null)
             yield break;
 
-        spriteRenderer.sprite = visuals[emotion];
-
         if (emotion == Emotion.Idle)
             yield break;
 
-        var am = GameManager.Instance.AudioManager;
-
-        switch (emotion)
-        {
-            case Emotion.Angry:
-                //am.PlayVoice("");
-                //Angry voice here
-                break;
-            case Emotion.Sad:
-                //Sad voice here
-                break;
-            case Emotion.Happy:
-                //Happy voice here
-                break;
-        }
-
+        spriteRenderer.sprite = visuals[emotion].Item1;
+        GameManager.Instance.AudioManager.PlayVoice(visuals[emotion].Item2);
         yield return new WaitForSecondsRealtime(.5f);
-        spriteRenderer.sprite = visuals[Emotion.Idle];
+        spriteRenderer.sprite = visuals[Emotion.Idle].Item1;
     }
 }

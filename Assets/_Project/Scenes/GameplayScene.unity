@@ -167,12 +167,16 @@ MonoBehaviour:
   emotionSprites:
   - value: 0
     sprite: {fileID: 21300000, guid: 75e37aee834b9c041a9f92c9f88f384f, type: 3}
+    voice: 
   - value: 1
     sprite: {fileID: 21300000, guid: 748321fa78b0fc64cafbec4f30bed4c8, type: 3}
+    voice: GreenAngry
   - value: 2
     sprite: {fileID: 21300000, guid: 9f9bb5de707f24840a5c671535a94b5c, type: 3}
+    voice: GreenSad
   - value: 3
     sprite: {fileID: 0}
+    voice: GreenHappy
   spriteRenderer: {fileID: 202657715}
   <Id>k__BackingField: 3
 --- !u!212 &202657715
@@ -735,12 +739,16 @@ MonoBehaviour:
   emotionSprites:
   - value: 0
     sprite: {fileID: 21300000, guid: 12d8d048e889ba54db4ad764b5d583ba, type: 3}
+    voice: 
   - value: 1
     sprite: {fileID: 21300000, guid: 3cd2da2f93954d24db96feadb5926106, type: 3}
+    voice: PurpleAngry
   - value: 2
     sprite: {fileID: 21300000, guid: 0b309883d3b95c041ada3af6075fe97c, type: 3}
+    voice: PurpleSad
   - value: 3
     sprite: {fileID: 0}
+    voice: PurpleHappy
   spriteRenderer: {fileID: 1178152889}
   <Id>k__BackingField: 2
 --- !u!212 &1178152889
@@ -1046,12 +1054,16 @@ MonoBehaviour:
   emotionSprites:
   - value: 0
     sprite: {fileID: 21300000, guid: a01a315d418f2fd49a5360e3876c07f9, type: 3}
+    voice: 
   - value: 1
     sprite: {fileID: 21300000, guid: 19bb41b9e9442644792e5d57d862f08e, type: 3}
+    voice: BlueAngry
   - value: 2
     sprite: {fileID: 21300000, guid: 6a79bdac27fac674fb943dcea2112e36, type: 3}
+    voice: BlueSad
   - value: 3
     sprite: {fileID: 0}
+    voice: BlueHappy
   spriteRenderer: {fileID: 1320821624}
   <Id>k__BackingField: 4
 --- !u!212 &1320821624
