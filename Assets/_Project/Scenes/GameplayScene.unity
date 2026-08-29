@@ -178,7 +178,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: d310ae6226f0d4c46b59d41587419d11, type: 3}
     voice: GreenHappy
   spriteRenderer: {fileID: 202657715}
-  <Name>k__BackingField: 
+  <Name>k__BackingField: Bing
   <Id>k__BackingField: 3
   <Color>k__BackingField: {r: 0.5372549, g: 0.65882355, b: 0.21960784, a: 1}
 --- !u!1 &202657712
@@ -332,7 +332,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: de8b1a053bd6c9e4190f1fbf16c908de, type: 3}
     voice: BlueHappy
   spriteRenderer: {fileID: 1320821624}
-  <Name>k__BackingField: 
+  <Name>k__BackingField: Beep
   <Id>k__BackingField: 4
   <Color>k__BackingField: {r: 0.24705882, g: 0.6392157, b: 0.67058825, a: 1}
 --- !u!1 &616233543
@@ -672,7 +672,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: f19259e12aed908429143d6dc56ab73b, type: 3}
     voice: PurpleHappy
   spriteRenderer: {fileID: 1178152889}
-  <Name>k__BackingField: 
+  <Name>k__BackingField: Blop
   <Id>k__BackingField: 2
   <Color>k__BackingField: {r: 0.85490197, g: 0.16862746, b: 0.6745098, a: 1}
 --- !u!1 &914741629
@@ -1227,7 +1227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   emotionSprites: []
   spriteRenderer: {fileID: 0}
-  <Name>k__BackingField: 
+  <Name>k__BackingField: Player
   <Id>k__BackingField: 1
   <Color>k__BackingField: {r: 0.93333334, g: 0.7411765, b: 0.050980393, a: 1}
 --- !u!1 &1720829991
