@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     {
         IsLoading = true;
 
-        // Unload old content scene
         if (unloadCurrent && !string.IsNullOrEmpty(CurrentSceneName))
         {
             Players.ClearCharacters();
@@ -87,37 +86,11 @@ public class GameManager : MonoBehaviour
         while (!load.isDone)
             yield return null;
 
-        // Set new scene as active (so new objects there)
         Scene loaded = SceneManager.GetSceneByName(sceneName);
         SceneManager.SetActiveScene(loaded);
 
         CurrentSceneName = sceneName;
         IsLoading = false;
         OnSceneLoaded?.Invoke(sceneName);
-    }
-
-    public void RegisterPlayer(Player player)
-    {
-        //Player = player;
-        Players.Register(player);
-        //OnPlayerRegistered?.Invoke();
-    }
-
-    public void UnregisterPlayer()
-    {
-        //if (Player != null)
-        //    Characters.Unregister(Player);
-
-        //Player = null;
-    }
-
-    public void RegisterCharacter(Player character)
-    {
-        Players.Register(character);
-    }
-
-    public void UnregisterCharacter(Player character)
-    {
-        Players.Unregister(character);
     }
 }

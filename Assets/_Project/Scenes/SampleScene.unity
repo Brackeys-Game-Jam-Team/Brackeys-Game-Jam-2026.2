@@ -3488,7 +3488,6 @@ MonoBehaviour:
   spacing: {x: 2, y: 3}
   dealDuration: 0.3
   delayBetweenCards: 0.05
-  turnCount: 0
   players: []
 --- !u!1 &1110125392
 GameObject:
@@ -5328,7 +5327,8 @@ MonoBehaviour:
 
     Art:
 
-    cinnamonbear'
+    Cally
+    Taylor'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cdff9935022317044adecca604e75c54, type: 2}
   m_sharedMaterial: {fileID: -3082848937618276010, guid: cdff9935022317044adecca604e75c54, type: 2}
@@ -5489,47 +5489,67 @@ MonoBehaviour:
     loop: 0
   voiceClips:
   - name: PurpleHappy
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: b96b4bf4e24341948beaafdfd5bf24ed, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: PurpleLaugh
+    clip: {fileID: 8300000, guid: b28437df6a6647a41b1e178603f75437, type: 3}
     volume: 1
     pitch: 1
     loop: 0
   - name: PurpleAngry
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 80d13fd81e278504aa16a59fd0db08ee, type: 3}
     volume: 1
     pitch: 1
     loop: 0
   - name: PurpleSad
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: d7ae1a98cae6d06418f2f4c7070d9c36, type: 3}
     volume: 1
     pitch: 1
     loop: 0
   - name: BlueHappy
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: b96b4bf4e24341948beaafdfd5bf24ed, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 1.5
+    loop: 0
+  - name: BlueLaugh
+    clip: {fileID: 8300000, guid: b28437df6a6647a41b1e178603f75437, type: 3}
+    volume: 1
+    pitch: 1.5
     loop: 0
   - name: BlueAngry
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 80d13fd81e278504aa16a59fd0db08ee, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 1.5
     loop: 0
   - name: BlueSad
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: d7ae1a98cae6d06418f2f4c7070d9c36, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 1.5
     loop: 0
   - name: GreenHappy
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: b96b4bf4e24341948beaafdfd5bf24ed, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 0.5
+    loop: 0
+  - name: GreenLaugh
+    clip: {fileID: 8300000, guid: b28437df6a6647a41b1e178603f75437, type: 3}
+    volume: 1
+    pitch: 0.5
     loop: 0
   - name: GreenAngry
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 80d13fd81e278504aa16a59fd0db08ee, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 0.5
     loop: 0
   - name: GreenSad
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: d7ae1a98cae6d06418f2f4c7070d9c36, type: 3}
+    volume: 1
+    pitch: 0.5
+    loop: 0
+  - name: Applause
+    clip: {fileID: 8300000, guid: 8fef20e3bb7422340b9e6b5fc291cdd9, type: 3}
     volume: 1
     pitch: 1
     loop: 0

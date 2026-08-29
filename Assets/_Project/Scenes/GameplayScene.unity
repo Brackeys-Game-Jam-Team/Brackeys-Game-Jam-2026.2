@@ -177,6 +177,9 @@ MonoBehaviour:
   - value: 3
     sprite: {fileID: 21300000, guid: d310ae6226f0d4c46b59d41587419d11, type: 3}
     voice: GreenHappy
+  - value: 4
+    sprite: {fileID: 0}
+    voice: GreenLaugh
   spriteRenderer: {fileID: 202657715}
   <Name>k__BackingField: Bing
   <Id>k__BackingField: 3
@@ -331,6 +334,9 @@ MonoBehaviour:
   - value: 3
     sprite: {fileID: 21300000, guid: de8b1a053bd6c9e4190f1fbf16c908de, type: 3}
     voice: BlueHappy
+  - value: 4
+    sprite: {fileID: 0}
+    voice: BlueLaugh
   spriteRenderer: {fileID: 1320821624}
   <Name>k__BackingField: Beep
   <Id>k__BackingField: 4
@@ -671,6 +677,9 @@ MonoBehaviour:
   - value: 3
     sprite: {fileID: 21300000, guid: f19259e12aed908429143d6dc56ab73b, type: 3}
     voice: PurpleHappy
+  - value: 4
+    sprite: {fileID: 0}
+    voice: PurpleLaugh
   spriteRenderer: {fileID: 1178152889}
   <Name>k__BackingField: Blop
   <Id>k__BackingField: 2

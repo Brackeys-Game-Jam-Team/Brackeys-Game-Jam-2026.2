@@ -11,6 +11,11 @@ public class CreditsMenuScreen : UIScreen
         backButton.onClick.AddListener(OnBackToMainMenuClicked);
     }
 
+    protected override void OnShow()
+    {
+        GameManager.Instance.AudioManager.PlayVoice("Applause");
+    }
+
     private void OnBackToMainMenuClicked()
     {
         GameManager.Instance.AudioManager.PlaySFX("ButtonClick");

@@ -8,7 +8,8 @@ public enum Emotion
     Idle,
     Angry,
     Sad,
-    Happy
+    Happy,
+    Laugh
 }
 
 public class Player : MonoBehaviour
@@ -40,7 +41,6 @@ public class Player : MonoBehaviour
 
     public void Initialize(bool isHuman)
     {
-        //Id = id;
         IsHuman = isHuman;
         Score = 0;
         StartCoroutine(SetEmotion(Emotion.Idle));
@@ -60,8 +60,19 @@ public class Player : MonoBehaviour
             yield break;
 
         spriteRenderer.sprite = visuals[emotion].Item1;
-        GameManager.Instance.AudioManager.PlayVoice(visuals[emotion].Item2);
+
+        if (Random.value < .5f)
+            GameManager.Instance.AudioManager.PlayVoice(visuals[emotion].Item2);
+
         yield return new WaitForSecondsRealtime(.5f);
         spriteRenderer.sprite = visuals[Emotion.Idle].Item1;
+    }
+
+    public void Laugh()
+    {
+        if (visuals == null || visuals.Count <= 0)
+            return;
+
+        GameManager.Instance.AudioManager.PlayVoice(visuals[Emotion.Laugh].Item2);
     }
 }

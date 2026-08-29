@@ -35,7 +35,7 @@ public class Gameplay : MonoBehaviour
     [SerializeField] private float dealDuration = 0.3f;
     [SerializeField] private float delayBetweenCards = 0.05f;
 
-    public int turnCount;
+    public int TurnCount { get; set; }
     private readonly List<Card> activeCards = new();
     public List<Player> players = new();
     private Dictionary<CardValue, Sprite> visuals;
@@ -51,7 +51,7 @@ public class Gameplay : MonoBehaviour
         visuals = cardVisuals.ToDictionary(item => item.value, item => item.sprite);
     }
 
-    // Called during the StartState, generates cards and spawns them to the map
+    // Called during StartState, generates cards and spawns them to the map
     public void StartGame()
     {
         players = GameManager.Instance.Players.GetAll<Player>();
@@ -60,7 +60,7 @@ public class Gameplay : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
             players[i].Initialize(isHuman: i == 0);
 
-        turnCount = 0;
+        TurnCount = 0;
         StartGenerateCards();
     }
 
@@ -180,8 +180,6 @@ public class Gameplay : MonoBehaviour
 
         var gs = GameManager.Instance.StateMachine.GetState<GameplayState>();
         gs.ChangeState<CompareState>();
-
-        //ResolveRound();
     }
 
     // Called during CompareState, applies score, special card, updates the score
@@ -208,10 +206,11 @@ public class Gameplay : MonoBehaviour
         {
             Card chosenCard = selections[player];
             bool isSolo = groupedByCard[chosenCard].Count == 1;
-            Vector3 targetPosition = isSolo ? player.transform.position : Vector3.zero;
+            Vector3 targetPosition = isSolo ? player.transform.position + Vector3.up * 2 : Vector3.zero;
 
+            // Multiple share splits can cause the text to overlap
             if (!isSolo)
-                SpawnFloatingText("SHARED SPLIT!", Vector3.zero, Color.orange);
+                SpawnFloatingText($"SHARED SPLIT! {string.Join(", ", groupedByCard[chosenCard])}", Vector3.zero, Color.orange);
 
             activeAnimations.Add(StartCoroutine(AnimateCard(chosenCard, targetPosition, 0.5f)));
         }
@@ -236,6 +235,7 @@ public class Gameplay : MonoBehaviour
                 yield return player.SetEmotion(Emotion.Happy);
         }
 
+        // Text overlaps if someone gains points and lose them after another player picked the special cards
         foreach (var (card, pickers) in groupedByCard)
         {
             if (card.Value == CardValue.Special)
@@ -254,6 +254,10 @@ public class Gameplay : MonoBehaviour
             Destroy(card.gameObject);
         }
 
+        // Slightly redundant check to delay the results menu
+        if (CheckGameCondition())
+            yield return new WaitForSecondsRealtime(2f);
+
         var gs = GameManager.Instance.StateMachine.GetState<GameplayState>();
         gs.ChangeState<CheckConditionState>();
     }
@@ -263,8 +267,6 @@ public class Gameplay : MonoBehaviour
         Vector3 startPos = card.transform.localPosition;
         Quaternion startRot = card.transform.rotation;
         float elapsed = 0f;
-
-        targetPos += Vector3.up * 2;
 
         while (elapsed < duration)
         {
@@ -367,7 +369,6 @@ public class Gameplay : MonoBehaviour
         if (targets.Count == 0)
             yield break;
 
-        // Distribute the cost
         int baseSteal = totalAmount / targets.Count;
         int remainder = totalAmount % targets.Count;
 
@@ -385,6 +386,7 @@ public class Gameplay : MonoBehaviour
         }
 
         picker.Score += totalAmount;
+        SpawnFloatingText($"+{totalAmount}", picker.transform.position, picker.Color);
     }
     
     // Called during the CheckConditionState to determine whether the game should continue or end

@@ -58,7 +58,7 @@ public class ScoreTurnCountOverlay : UIScreen
         if (textOverlayImage == null || playerScoreText == null || turnCountText == null || gameplay == null) return;
 
         // Update turn count text
-        turnCountText.text = "Turn " + gameplay.turnCount;
+        turnCountText.text = "Turn " + gameplay.TurnCount;
 
         // Update overlay image width as needed
         DetermineOverlayImageWidth();
@@ -69,7 +69,7 @@ public class ScoreTurnCountOverlay : UIScreen
     {
         return;
         // Check if score's length is greater than turn count's length
-        if (gameplay.players[0].Score.ToString().Length > gameplay.turnCount.ToString().Length)
+        if (gameplay.players[0].Score.ToString().Length > gameplay.TurnCount.ToString().Length)
         {
             // Update text overlay image size if current length doesn't match the score's length
             if (currentLength != gameplay.players[0].Score.ToString().Length)
@@ -83,16 +83,16 @@ public class ScoreTurnCountOverlay : UIScreen
         }
 
         // Check if turn count's length is greater than score's length
-        else if (gameplay.turnCount.ToString().Length > gameplay.players[0].Score.ToString().Length)
+        else if (gameplay.TurnCount.ToString().Length > gameplay.players[0].Score.ToString().Length)
         {
             // Update text overlay image size if current length doesn't match the turn count's length
-            if (currentLength != gameplay.turnCount.ToString().Length)
+            if (currentLength != gameplay.TurnCount.ToString().Length)
             {
                 textOverlayImage.rectTransform.sizeDelta = new Vector2(
-                    overlayImageInitialSize.x + (imageWidthForTurnCountPadding * (gameplay.turnCount.ToString().Length - 1)),
+                    overlayImageInitialSize.x + (imageWidthForTurnCountPadding * (gameplay.TurnCount.ToString().Length - 1)),
                     overlayImageInitialSize.y);
 
-                currentLength = gameplay.turnCount.ToString().Length;
+                currentLength = gameplay.TurnCount.ToString().Length;
             }
         }
 

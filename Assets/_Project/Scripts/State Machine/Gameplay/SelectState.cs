@@ -6,7 +6,7 @@ public class SelectState : State<GameManager>
 
     public override void Enter()
     {
-        GameManager.Instance.Gameplay.turnCount++;
+        GameManager.Instance.Gameplay.TurnCount++;
         GameManager.Instance.CanSelectCard = true;
         var scoreUI = GameManager.Instance.UIManager.GetScreen<ScoreTurnCountOverlay>();
         scoreUI.UpdateTurnCountText();
