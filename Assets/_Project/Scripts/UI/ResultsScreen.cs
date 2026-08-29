@@ -92,6 +92,7 @@ public class ResultsScreen : UIScreen
 
     private void OnPlayAgainClicked()
     {
+        GameManager.Instance.AudioManager.PlaySFX("ButtonClick2");
         GameManager.Instance.UIManager.ClearStack();
         var gs = GameManager.Instance.StateMachine.GetState<GameplayState>();
         gs.ChangeState<StartState>();
@@ -99,6 +100,7 @@ public class ResultsScreen : UIScreen
 
     private void OnQuitClicked()
     {
+        GameManager.Instance.AudioManager.PlaySFX("ButtonClick");
         GameManager.Instance.Gameplay.ClearBoard();
         GameManager.Instance.UIManager.ClearStack();
         GameManager.Instance.StateMachine.TransitionToScene<MainMenuState>("MainMenu");

@@ -198,6 +198,7 @@ public class Gameplay : MonoBehaviour
             yield break;
         }
 
+        GameManager.Instance.AudioManager.PlaySFX("CardPickup");
         var groupedByCard = selections.GroupBy(kvp => kvp.Value).ToDictionary(g => g.Key, g => g.Select(kvp => kvp.Key).ToList());
         var pickedValueCards = selections.Values.Where(c => c.Value != CardValue.Special).Select(c => c.Value).ToList();
         CardValue? lowestPickedValue = pickedValueCards.Count > 0 ? pickedValueCards.Max() : null;
@@ -205,7 +206,6 @@ public class Gameplay : MonoBehaviour
 
         foreach (var player in players)
         {
-            GameManager.Instance.AudioManager.PlaySFX("CardPickup");
             Card chosenCard = selections[player];
             bool isSolo = groupedByCard[chosenCard].Count == 1;
             Vector3 targetPosition = isSolo ? player.transform.position : Vector3.zero;

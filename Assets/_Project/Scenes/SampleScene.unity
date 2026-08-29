@@ -5584,10 +5584,15 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 1
+  - name: TitleMusic
+    clip: {fileID: 8300000, guid: 2e62b7cd87157854390c166f0015513d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
   sfxClips:
   - name: CardSpread
-    clip: {fileID: 0}
-    volume: 1
+    clip: {fileID: 8300000, guid: 771087a1d7e037049b55ee3c8f6c199f, type: 3}
+    volume: 0.3
     pitch: 1
     loop: 0
   - name: CardPickup
@@ -5596,12 +5601,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
   - name: ButtonClick
-    clip: {fileID: 8300000, guid: e16016d357f753e4ea6317fd6b6b02b6, type: 3}
+    clip: {fileID: 8300000, guid: 48ac98dc143473a43ae0cbeb007a8adb, type: 3}
     volume: 1
     pitch: 1
     loop: 0
   - name: ButtonClick2
-    clip: {fileID: 8300000, guid: 48ac98dc143473a43ae0cbeb007a8adb, type: 3}
+    clip: {fileID: 8300000, guid: e16016d357f753e4ea6317fd6b6b02b6, type: 3}
     volume: 1
     pitch: 1
     loop: 0

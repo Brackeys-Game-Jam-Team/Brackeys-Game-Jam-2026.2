@@ -22,6 +22,7 @@ public class OverviewState : State<GameManager>
 
     private void OnButtonPressed(InputAction.CallbackContext context)
     {
+        GameManager.Instance.AudioManager.PlaySFX("ButtonClick2");
         owner.ChangeState<StartState>();
     }
 }

@@ -13,6 +13,7 @@ public class CreditsMenuScreen : UIScreen
 
     private void OnBackToMainMenuClicked()
     {
+        GameManager.Instance.AudioManager.PlaySFX("ButtonClick");
         GameManager.Instance.UIManager.ClearStack();
         GameManager.Instance.UIManager.PushScreen<MainMenuScreen>();
     }
