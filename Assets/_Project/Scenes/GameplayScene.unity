@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &202657712
+--- !u!1 &119246765
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,38 +127,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 202657713}
-  - component: {fileID: 202657715}
-  - component: {fileID: 202657714}
+  - component: {fileID: 119246766}
+  - component: {fileID: 119246767}
   m_Layer: 0
-  m_Name: Green Alien (P3)
+  m_Name: Player (P3)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &202657713
+--- !u!4 &119246766
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202657712}
+  m_GameObject: {fileID: 119246765}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 0.268, y: 0.268, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 202657713}
   m_Father: {fileID: 1830279697}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &202657714
+--- !u!114 &119246767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202657712}
+  m_GameObject: {fileID: 119246765}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
@@ -179,6 +179,39 @@ MonoBehaviour:
     voice: GreenHappy
   spriteRenderer: {fileID: 202657715}
   <Id>k__BackingField: 3
+  <Color>k__BackingField: {r: 0.5372549, g: 0.65882355, b: 0.21960784, a: 1}
+--- !u!1 &202657712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 202657713}
+  - component: {fileID: 202657715}
+  m_Layer: 0
+  m_Name: Green Alien (P3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &202657713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202657712}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7, y: -1, z: 0}
+  m_LocalScale: {x: 0.268, y: 0.268, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 119246766}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &202657715
 SpriteRenderer:
   serializedVersion: 3
@@ -239,6 +272,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &378093731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 378093732}
+  - component: {fileID: 378093733}
+  m_Layer: 0
+  m_Name: Player (P4)
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &378093732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378093731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.2, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1320821622}
+  m_Father: {fileID: 1830279697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &378093733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378093731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  emotionSprites:
+  - value: 0
+    sprite: {fileID: 21300000, guid: a01a315d418f2fd49a5360e3876c07f9, type: 3}
+    voice: 
+  - value: 1
+    sprite: {fileID: 21300000, guid: 19bb41b9e9442644792e5d57d862f08e, type: 3}
+    voice: BlueAngry
+  - value: 2
+    sprite: {fileID: 21300000, guid: 6a79bdac27fac674fb943dcea2112e36, type: 3}
+    voice: BlueSad
+  - value: 3
+    sprite: {fileID: 0}
+    voice: BlueHappy
+  spriteRenderer: {fileID: 1320821624}
+  <Id>k__BackingField: 4
+  <Color>k__BackingField: {r: 0.24705882, g: 0.6392157, b: 0.67058825, a: 1}
 --- !u!1 &616233543
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +611,67 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &898790383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 898790384}
+  - component: {fileID: 898790385}
+  m_Layer: 0
+  m_Name: Player (P2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &898790384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898790383}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1178152887}
+  m_Father: {fileID: 1830279697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &898790385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898790383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  emotionSprites:
+  - value: 0
+    sprite: {fileID: 21300000, guid: 12d8d048e889ba54db4ad764b5d583ba, type: 3}
+    voice: 
+  - value: 1
+    sprite: {fileID: 21300000, guid: 3cd2da2f93954d24db96feadb5926106, type: 3}
+    voice: PurpleAngry
+  - value: 2
+    sprite: {fileID: 21300000, guid: 0b309883d3b95c041ada3af6075fe97c, type: 3}
+    voice: PurpleSad
+  - value: 3
+    sprite: {fileID: 0}
+    voice: PurpleHappy
+  spriteRenderer: {fileID: 1178152889}
+  <Id>k__BackingField: 2
+  <Color>k__BackingField: {r: 0.85490197, g: 0.16862746, b: 0.6745098, a: 1}
 --- !u!1 &914741629
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,53 +799,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &1050717072
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1050717073}
-  - component: {fileID: 1050717074}
-  m_Layer: 0
-  m_Name: Player (P1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1050717073
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050717072}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1830279697}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1050717074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050717072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  emotionSprites: []
-  spriteRenderer: {fileID: 0}
-  <Id>k__BackingField: 1
 --- !u!1 &1178152886
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,7 +809,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1178152887}
   - component: {fileID: 1178152889}
-  - component: {fileID: 1178152888}
   m_Layer: 0
   m_Name: Purple Alien (P2)
   m_TagString: Untagged
@@ -718,39 +825,12 @@ Transform:
   m_GameObject: {fileID: 1178152886}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 0.268, y: 0.268, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1830279697}
+  m_Father: {fileID: 898790384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1178152888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178152886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  emotionSprites:
-  - value: 0
-    sprite: {fileID: 21300000, guid: 12d8d048e889ba54db4ad764b5d583ba, type: 3}
-    voice: 
-  - value: 1
-    sprite: {fileID: 21300000, guid: 3cd2da2f93954d24db96feadb5926106, type: 3}
-    voice: PurpleAngry
-  - value: 2
-    sprite: {fileID: 21300000, guid: 0b309883d3b95c041ada3af6075fe97c, type: 3}
-    voice: PurpleSad
-  - value: 3
-    sprite: {fileID: 0}
-    voice: PurpleHappy
-  spriteRenderer: {fileID: 1178152889}
-  <Id>k__BackingField: 2
 --- !u!212 &1178152889
 SpriteRenderer:
   serializedVersion: 3
@@ -1016,7 +1096,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1320821622}
   - component: {fileID: 1320821624}
-  - component: {fileID: 1320821623}
   m_Layer: 0
   m_Name: Blue Alien (P4)
   m_TagString: Untagged
@@ -1033,39 +1112,12 @@ Transform:
   m_GameObject: {fileID: 1320821621}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -6.2, y: -1.5, z: 0}
   m_LocalScale: {x: 0.268, y: 0.268, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1830279697}
+  m_Father: {fileID: 378093732}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1320821623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1320821621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  emotionSprites:
-  - value: 0
-    sprite: {fileID: 21300000, guid: a01a315d418f2fd49a5360e3876c07f9, type: 3}
-    voice: 
-  - value: 1
-    sprite: {fileID: 21300000, guid: 19bb41b9e9442644792e5d57d862f08e, type: 3}
-    voice: BlueAngry
-  - value: 2
-    sprite: {fileID: 21300000, guid: 6a79bdac27fac674fb943dcea2112e36, type: 3}
-    voice: BlueSad
-  - value: 3
-    sprite: {fileID: 0}
-    voice: BlueHappy
-  spriteRenderer: {fileID: 1320821624}
-  <Id>k__BackingField: 4
 --- !u!212 &1320821624
 SpriteRenderer:
   serializedVersion: 3
@@ -1126,6 +1178,54 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &1357853867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1357853868}
+  - component: {fileID: 1357853869}
+  m_Layer: 0
+  m_Name: Player (P1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1357853868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357853867}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1830279697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1357853869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357853867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e593648f6206e6e4196032cf5d07b926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  emotionSprites: []
+  spriteRenderer: {fileID: 0}
+  <Id>k__BackingField: 1
+  <Color>k__BackingField: {r: 0.93333334, g: 0.7411765, b: 0.050980393, a: 1}
 --- !u!1 &1720829991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,10 +1466,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1050717073}
-  - {fileID: 1178152887}
-  - {fileID: 202657713}
-  - {fileID: 1320821622}
+  - {fileID: 1357853868}
+  - {fileID: 898790384}
+  - {fileID: 119246766}
+  - {fileID: 378093732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1903643985

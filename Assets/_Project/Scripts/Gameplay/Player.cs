@@ -23,7 +23,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private List<EmotionData> emotionSprites;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [field: SerializeField] public string Name { get; private set; }
     [field: SerializeField] public int Id { get; private set; }
+    [field: SerializeField] public Color Color { get; private set; }
 
     private Dictionary<Emotion, (Sprite, string)> visuals;
 
@@ -46,7 +48,7 @@ public class Player : MonoBehaviour
 
     public override string ToString()
     {
-        return $"Player {Id}{(IsHuman ? " (You)" : "")}";
+        return $"{Name}{(IsHuman ? $" (You)" : "")}";
     }
 
     public IEnumerator SetEmotion(Emotion emotion)

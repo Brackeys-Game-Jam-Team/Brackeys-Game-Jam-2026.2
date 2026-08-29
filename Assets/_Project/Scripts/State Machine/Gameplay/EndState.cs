@@ -8,7 +8,7 @@ public class EndState : State<GameManager>
     {
         var gameplay = GameManager.Instance.Gameplay;
         gameplay.AnnounceWinners();
-        GameManager.Instance.AudioManager.StopMusic();
+        //GameManager.Instance.AudioManager.StopMusic();
         GameManager.Instance.UIManager.PushScreen<ResultsScreen>();
         GameManager.Instance.UIManager.HideScreen<ScoreTurnCountOverlay>();
     }

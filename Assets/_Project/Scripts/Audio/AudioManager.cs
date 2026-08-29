@@ -25,6 +25,8 @@ public class AudioManager : MonoBehaviour
     private Dictionary<string, SoundClip> sfxLookup;
     private Dictionary<string, SoundClip> voiceLookup;
 
+    private AudioClip currentMusic;
+
     private void Awake()
     {
         musicLookup = BuildLookup(musicClips, "Music");
@@ -37,6 +39,10 @@ public class AudioManager : MonoBehaviour
         if (!TryGetClip(musicLookup, name, "Music", out var sound))
             return;
 
+        if (sound.clip == currentMusic)
+            return;
+
+        currentMusic = sound.clip;
         musicSource.clip = sound.clip;
         musicSource.pitch = sound.pitch;
         musicSource.loop = true;

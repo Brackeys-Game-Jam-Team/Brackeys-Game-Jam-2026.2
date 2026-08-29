@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -24,6 +25,7 @@ public class Gameplay : MonoBehaviour
 
     [SerializeField] private Transform cardContainer;
     [SerializeField] private Card cardPrefab;
+    [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private List<CardVisualData> cardVisuals;
 
     [Header("Grid")]
@@ -197,6 +199,39 @@ public class Gameplay : MonoBehaviour
         }
 
         var groupedByCard = selections.GroupBy(kvp => kvp.Value).ToDictionary(g => g.Key, g => g.Select(kvp => kvp.Key).ToList());
+        var pickedValueCards = selections.Values.Where(c => c.Value != CardValue.Special).Select(c => c.Value).ToList();
+        CardValue? lowestPickedValue = pickedValueCards.Count > 0 ? pickedValueCards.Max() : null;
+        List<Coroutine> activeAnimations = new();
+
+        foreach (var player in players)
+        {
+            GameManager.Instance.AudioManager.PlaySFX("CardPickup");
+            Card chosenCard = selections[player];
+            bool isSolo = groupedByCard[chosenCard].Count == 1;
+            Vector3 targetPosition = isSolo ? player.transform.position : Vector3.zero;
+
+            if (!isSolo)
+                SpawnFloatingText("SHARED SPLIT!", Vector3.zero, Color.orange);
+
+            activeAnimations.Add(StartCoroutine(AnimateCard(chosenCard, targetPosition, 0.5f)));
+        }
+
+        foreach (var anim in activeAnimations)
+            yield return anim;
+
+        foreach (var player in players)
+        {
+            Card chosenCard = selections[player];
+            chosenCard.transform.SetParent(null);
+            bool isShared = groupedByCard[chosenCard].Count > 1;
+            bool gotLowestCard = lowestPickedValue.HasValue && chosenCard.Value == lowestPickedValue.Value;
+
+            if (isShared)
+                yield return player.SetEmotion(Emotion.Angry);
+
+            else if (gotLowestCard)
+                yield return player.SetEmotion(Emotion.Sad);
+        }
 
         foreach (var (card, pickers) in groupedByCard)
         {
@@ -207,50 +242,8 @@ public class Gameplay : MonoBehaviour
                 ResolveValueCard(card.Value, pickers);
         }
 
-        var pickedValueCards = selections.Values.Where(c => c.Value != CardValue.Special).Select(c => c.Value).ToList();
-        CardValue? lowestPickedValue = null;
-
-        if (pickedValueCards.Count > 0)
-            lowestPickedValue = pickedValueCards.Max();
-
-        foreach (var player in players)
-        {
-            GameManager.Instance.AudioManager.PlaySFX("CardPickup");
-            Card chosenCard = selections[player];
-            int grabberCount = groupedByCard[chosenCard].Count;
-            bool isSolo = grabberCount == 1;
-            bool isShared = grabberCount > 1;
-            bool gotLowestCard = lowestPickedValue.HasValue && chosenCard.Value == lowestPickedValue.Value;
-
-            var time = .5f;
-            var start = chosenCard.transform.localPosition;
-            float elapsed = 0f;
-
-            while (elapsed < time)
-            {
-                float t = Mathf.SmoothStep(0, 1, elapsed / time);
-                chosenCard.transform.position = Vector3.Lerp(start, player.transform.position, t);
-                elapsed += Time.fixedDeltaTime;
-                yield return null;
-            }
-
-            // Can be changed later
-            if (isShared)
-                yield return player.SetEmotion(Emotion.Angry);
-
-            else if (gotLowestCard)
-                yield return player.SetEmotion(Emotion.Sad);
-        }
-
-        ScoreTurnCountOverlay scoreTurnCountOverlayObject = FindAnyObjectByType<ScoreTurnCountOverlay>();
-
-        if (scoreTurnCountOverlayObject != null)
-            scoreTurnCountOverlayObject.UpdatePlayerScoreText();
-
-        AIScoreOverlay aiScoreOverlayObject = FindAnyObjectByType<AIScoreOverlay>();
-
-        if (aiScoreOverlayObject != null)
-            aiScoreOverlayObject.UpdateAIScoreTexts();
+        FindAnyObjectByType<ScoreTurnCountOverlay>()?.UpdatePlayerScoreText();
+        FindAnyObjectByType<AIScoreOverlay>()?.UpdateAIScoreTexts();
 
         foreach (var card in groupedByCard.Keys)
         {
@@ -262,14 +255,80 @@ public class Gameplay : MonoBehaviour
         gs.ChangeState<CheckConditionState>();
     }
 
+    private IEnumerator AnimateCard(Card card, Vector3 targetPos, float duration)
+    {
+        Vector3 startPos = card.transform.localPosition;
+        Quaternion startRot = card.transform.rotation;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float t = Mathf.SmoothStep(0, 1, elapsed / duration);
+            card.transform.SetPositionAndRotation(Vector3.Lerp(startPos, targetPos, t), Quaternion.Lerp(startRot, Quaternion.identity, t));
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        card.transform.SetPositionAndRotation(targetPos, Quaternion.identity);
+    }
+
+    private void SpawnFloatingText(string text, Vector3 position, Color color)
+    {
+        if (floatingTextPrefab == null)
+            return;
+
+        GameObject popup = Instantiate(floatingTextPrefab, position, Quaternion.identity);
+        var tmp = popup.GetComponentInChildren<TMP_Text>();
+
+        if (tmp != null)
+        {
+            tmp.text = text;
+            tmp.color = color;
+        }
+
+        StartCoroutine(AnimateFloatingText(popup));
+    }
+
+    private IEnumerator AnimateFloatingText(GameObject obj)
+    {
+        float duration = 1.2f;
+        float elapsed = 0f;
+        Vector3 startPos = obj.transform.position;
+        Vector3 targetPos = startPos + Vector3.up * 1.5f;
+        CanvasGroup canvasGroup = obj.GetComponent<CanvasGroup>();
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            obj.transform.position = Vector3.Lerp(startPos, targetPos, t);
+
+            if (canvasGroup != null)
+                canvasGroup.alpha = Mathf.Lerp(1f, 0f, t);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(obj);
+    }
+
     // Call target.SetEmotion(Emotion.Happy); for any player who got the solo pick, and angry for those who share or got the lowest value card
     private void ResolveValueCard(CardValue value, List<Player> pickers)
     {
         int totalValue = GetPointValue(value);
         int share = Mathf.Max(totalValue / pickers.Count, 1);
 
+        if (pickers.Count > 1)
+            GameManager.Instance.AudioManager.PlaySFX("ScoreMid");
+
+        else
+            GameManager.Instance.AudioManager.PlaySFX("ScoreFull");
+
         foreach (var player in pickers)
+        {
             player.Score += share;
+            SpawnFloatingText($"+{share}", player.transform.position, player.Color);
+        }
     }
 
     private void ResolveSpecialCard(List<Player> pickers)
@@ -287,6 +346,7 @@ public class Gameplay : MonoBehaviour
         if (leaders.Count == 1 && leaders[0] == picker)
         {
             picker.Score += specialAmount;
+            SpawnFloatingText($"+{specialAmount}", picker.transform.position, picker.Color);
             return;
         }
 
@@ -313,9 +373,10 @@ public class Gameplay : MonoBehaviour
             if (remainder > 0)
                 remainder--;
 
-            target.Score -= amount;
+            target.Score = Mathf.Max(0, target.Score - amount);
 
             StartCoroutine(target.SetEmotion(Emotion.Sad));
+            SpawnFloatingText($"-{amount}", target.transform.position, target.Color);
         }
 
         picker.Score += totalAmount;

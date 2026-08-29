@@ -15,10 +15,12 @@ public class GameplayState : StateMachine
     {
         base.Enter();
         GameManager.Instance.InputManager.EnablePlayer();
+        GameManager.Instance.AudioManager.PlayMusic("Gameplay");
     }
 
     public override void Exit()
     {
         base.Exit();
+        GameManager.Instance.AudioManager.StopMusic();
     }
 }

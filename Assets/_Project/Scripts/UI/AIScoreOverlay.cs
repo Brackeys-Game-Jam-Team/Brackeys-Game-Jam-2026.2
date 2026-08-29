@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class AIScoreOverlay : MonoBehaviour
@@ -17,7 +16,6 @@ public class AIScoreOverlay : MonoBehaviour
     private Vector2 overlayImageInitialSize = Vector2.zero;
     private int currentLength = 0;
 
-    // DANIEL: Gameplay reference (keeps a list of players' scores and the turn count)
     private Gameplay gameplay => GameManager.Instance.Gameplay;
 
     private void Awake()
@@ -30,13 +28,13 @@ public class AIScoreOverlay : MonoBehaviour
         gameObject.SetActive(true);
 
         // Prevent errors by checking if one of the objects is null
-        if (textOverlayImage == null || gameplay == null) return;
+        //if (textOverlayImage == null || gameplay == null) return;
 
         int greatestScoreLength = 0;
 
         for (int i = 0; i < aiScoreTexts.Count; i++)
         {
-            aiScoreTexts[i].text = $"AI {i + 1} Score: " + gameplay.players[i + 1].Score;
+            aiScoreTexts[i].text = $"" + gameplay.players[i + 1].Score;
 
             // Make sure the greatest score length is set to the player that has the greatest score length
             if (greatestScoreLength < gameplay.players[i + 1].Score.ToString().Length)
@@ -46,10 +44,10 @@ public class AIScoreOverlay : MonoBehaviour
         }
 
         // Set initial text overlay image size to update width properly whenever score length changes
-        overlayImageInitialSize = textOverlayImage.rectTransform.sizeDelta;
+        //overlayImageInitialSize = textOverlayImage.rectTransform.sizeDelta;
 
         // Set the current length to be the score's length to string
-        currentLength = greatestScoreLength;
+        //currentLength = greatestScoreLength;
     }
 
     public void DisableOverlay()
@@ -60,13 +58,13 @@ public class AIScoreOverlay : MonoBehaviour
     public void UpdateAIScoreTexts()
     {
         // Prevent errors by checking if one of the objects is null
-        if (textOverlayImage == null || gameplay == null) return;
+        //if (textOverlayImage == null || gameplay == null) return;
 
         int greatestScoreLength = 0;
 
         for (int i = 0; i < aiScoreTexts.Count; i++)
         {
-            aiScoreTexts[i].text = $"AI {i + 1} Score: " + gameplay.players[i + 1].Score;
+            aiScoreTexts[i].text = $"" + gameplay.players[i + 1].Score;
 
             // Make sure the greatest score length is set to the player that has the greatest score length
             if (greatestScoreLength < gameplay.players[i + 1].Score.ToString().Length)
@@ -82,6 +80,7 @@ public class AIScoreOverlay : MonoBehaviour
     // This function is private since overlay image width will be determined after the score and turn count texts are updated
     private void DetermineOverlayImageWidth(int greatestScoreLength)
     {
+        return;
         // Update text overlay image size if current length doesn't match the score's length
         if (currentLength != greatestScoreLength)
         {
