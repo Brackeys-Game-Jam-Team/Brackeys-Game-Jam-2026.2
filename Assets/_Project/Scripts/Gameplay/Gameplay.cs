@@ -231,6 +231,9 @@ public class Gameplay : MonoBehaviour
 
             else if (gotLowestCard)
                 yield return player.SetEmotion(Emotion.Sad);
+
+            else
+                yield return player.SetEmotion(Emotion.Happy);
         }
 
         foreach (var (card, pickers) in groupedByCard)
@@ -260,6 +263,8 @@ public class Gameplay : MonoBehaviour
         Vector3 startPos = card.transform.localPosition;
         Quaternion startRot = card.transform.rotation;
         float elapsed = 0f;
+
+        targetPos += Vector3.up * 2;
 
         while (elapsed < duration)
         {

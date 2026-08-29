@@ -5591,12 +5591,17 @@ MonoBehaviour:
     pitch: 1
     loop: 0
   - name: CardPickup
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 7e32b65879f37e944b092b6ef843e82c, type: 3}
     volume: 1
     pitch: 1
     loop: 0
   - name: ButtonClick
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: e16016d357f753e4ea6317fd6b6b02b6, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: ButtonClick2
+    clip: {fileID: 8300000, guid: 48ac98dc143473a43ae0cbeb007a8adb, type: 3}
     volume: 1
     pitch: 1
     loop: 0
